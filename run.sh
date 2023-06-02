@@ -15,5 +15,5 @@ program_name=pakPy
 echo Hello $HOSTNAME 
 echo $welcome_title
 echo $pwd $time_stamp
-chmod 754 main.py
+chmod 777 main.py
 ./main.py
