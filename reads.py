@@ -39,8 +39,7 @@ def reader():
                             kmer_list.append(kmer)
                             kmer = ''
                             count = 0
-
-                    flag=True
+            
                 elif(k_size==48): #if you have to use the max length
                     k_size=47
                     count = 0
@@ -54,18 +53,18 @@ def reader():
                             kmer_list.append(kmer)
                             kmer = ''
                             count = 0
+                    
                 else: k_size += 1 
-                
-                
-                #save to a file for helpful troubleshooting
-                #can be removed in the final version
-                curdir = os.path.dirname(__file__)
-                file_path = curdir+'/fasta_files/kmer_data2.txt'
-                kmer_list = str(kmer_list)
-                fd = open(file_path, "w")
-                fd.write(kmer_list)
-                fd.close()
-
-                flag=False
+                  
+            #save to a file for helpful troubleshooting
+            #can be removed in the final version
+            curdir = os.path.dirname(__file__)
+            file_path = curdir+'/fasta_files/kmer_data2.txt'
+            kmer_list = str(kmer_list)
+            fd = open(file_path, "w")
+            fd.write(kmer_list)
+            fd.close()
+            return kmer_list
+            
         else: #catch 22 for if the file does not exist
             print("Sorry that file does not exist in the fasta_file folder. Please try again...")
