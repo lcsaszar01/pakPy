@@ -3,7 +3,7 @@
 Creates gene data set files in the .fasta format
 '''
 
-import sys,os 
+import os 
 
 def fasta_create():
     file_name = input("Please enter the file name > ")
