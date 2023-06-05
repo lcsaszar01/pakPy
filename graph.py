@@ -5,14 +5,20 @@ Inspired by the graph tutorials at https://www.tutorialspoint.com/python_data_st
 
 '''
 import os
+import math as m
 
 class u:
-    def __init__(self, prefix_count, terminal):
-        self.prefix_count = prefix_count
-        self.terminal = terminal
+    def __init__(prefix, prefix_count, terminal):
+        prefix.prefix_count = prefix_count
+        prefix.terminal = terminal
+    def __init__(suffix, suffix_count, terminal):
+        suffix.suffix_count = suffix_count
+        suffix.terminal = terminal
         
-    def show(self):
-        print("THE PREFIX_COUNT:", self.prefix_counts, '\nTERMINAL?: ', self.terminal)
+    def showA(self):
+        print("THE PREFIX_COUNT:", prefix.prefix_counts, '\nTERMINAL?: ', prefix.terminal)
+    def showB(self):
+        print("THE PREFIX_COUNT:", suffix.suffix_counts, '\nTERMINAL?: ', suffix.terminal)
 
 def graph_maker(kmer_list):
     enum = enumerate(kmer_list) #count the number of strings in the list to prep it for dictionary conversion
@@ -54,8 +60,11 @@ def graph_maker(kmer_list):
         vertex_count = 0
         coverage = 100 #assuming 100% for the fake_dna sample that chatGPT created
         prefix_dict = dict(mute_kmer='', vertex_count_str='') 
-
-        for d in range(len(kmer_dict)):
+        suffix_dict = dict(mute_kmer2='', vertex_count_str2='')
+        count2=0
+        alpha_size2 =0
+        vertex_count2=0
+        for d in range(len(kmer_dict)): #FIND EDGES FOR PREFIX
             for a in alpha:
                 alpha_size +=1
                 print("FOR LETTER:", a)
@@ -65,20 +74,37 @@ def graph_maker(kmer_list):
                 print("ADDED LETTER:  ", temp_lmer)
                 if(dict_str == temp_lmer):
                     count1 += 1
-                    vertex_count = ceil(count1/coverage)
+                    vertex_count = m.ceil(count1/coverage)
                     prefix_dict(temp_lmer, vertex_count)
-                    lmer = u(prefix_dict, None)
-                    lmer.show()
+                    lmer = u.prefix(prefix_dict, None)
+                    lmer.showA()
                     
                 else:
                     print("Not in dict\n")
-            '''
-            LEFT TO DO:
-            
-            do edge detection
-            graph = wire()
-            return graph
-            '''
+                    
+        print("\nSUFFIX\n")
+        for d2 in range(len(kmer_dict)): #FIND EDGES FOR SUFFIX
+            for a2 in alpha:
+                alpha_size2 +=1
+                print("FOR LETTER:", a2)
+                dict_str2 = kmer_dict.get(d2)
+                print("DICTONARY VALUE", kmer_dict.get(d2))
+                temp_lmer2 = lmerB+a2
+                print("ADDED LETTER:  ", temp_lmer2)
+                if(dict_str2 == temp_lmer2):
+                    count2 += 1
+                    vertex_count2 = m.ceil(count2/coverage)
+                    suffix_dict(temp_lmer2, vertex_count2)
+                    lmer = u.suffix(suffix_dict, None)
+                    lmer.showB()
+                    
+                else:
+                    print("Not in dict\n")
+        '''
+        LEFT TO DO:
+        graph = wire()
+        return graph
+        '''
  
 ####CALLING THE FUNCTION####
 curdir = os.path.dirname(__file__)
