@@ -1,3 +1,5 @@
 # pakPy
 
-##This project is part of the FORZA subproject of Dr. Kogge's Computer Lab at the [https://cse.nd.edu/faculty/peter-kogge/](University of Notre Dame - Peter Kogge)
+##This project is part of the FORZA subproject of [Dr. Kogge's Computer Lab](https://cse.nd.edu/faculty/peter-kogge/) in the [University of Notre Dame Department of Computer Science and Engineering](https://cse.nd.edu)
+
+Inspired by the orignal work of Dr. P Ghosh et al. in the PaKman: A Scalable Algorithm for Generating Genomic Contigs on Distributed Memeory Machines ([github]([url](https://github.com/pnnl/pakman))). This project works to speed up the outcomes seen in the paper.
