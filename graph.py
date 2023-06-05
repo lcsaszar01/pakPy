@@ -6,8 +6,11 @@ Inspired by the graph tutorials at https://www.tutorialspoint.com/python_data_st
 '''
 import os
 import math as m
+import wire
 
 class u:
+    def __init__(wire_info, info):
+        wire_info.info=info
     def __init__(prefix, prefix_count, terminal):
         prefix.prefix_count = prefix_count
         prefix.terminal = terminal
@@ -16,9 +19,9 @@ class u:
         suffix.terminal = terminal
         
     def showA(self):
-        print("THE PREFIX_COUNT:", prefix.prefix_counts, '\nTERMINAL?: ', prefix.terminal)
+        print("THE PREFIX_COUNT:", u.prefix.prefix_counts, '\nTERMINAL?: ', u.prefix.terminal)
     def showB(self):
-        print("THE PREFIX_COUNT:", suffix.suffix_counts, '\nTERMINAL?: ', suffix.terminal)
+        print("THE PREFIX_COUNT:", u.suffix.suffix_counts, '\nTERMINAL?: ', u.suffix.terminal)
 
 def graph_maker(kmer_list):
     enum = enumerate(kmer_list) #count the number of strings in the list to prep it for dictionary conversion
@@ -102,13 +105,14 @@ def graph_maker(kmer_list):
                     print("Not in dict\n")
         '''
         LEFT TO DO:
-        graph = wire()
-        return graph
+			wire_info = wire(u)
+			graph = u.wire_info.info()
+    return graph
         '''
  
 ####CALLING THE FUNCTION####
 curdir = os.path.dirname(__file__)
-path = os.path.join(curdir+"/fasta_files/kmer_data2.txt")
+path = os.path.join(curdir+"/fasta_files/dna_kmer.txt")
 fd = open(path, 'r')
 kmer_list = fd.read()
 fd.close()
