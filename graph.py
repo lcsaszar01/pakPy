@@ -9,12 +9,13 @@ import math as m
 import wire
 
 class u:
-    def __init__(wire_info, info):
+    def __init__subclass__(wire_info, info):
+        super().__init_subclass__(info)
         wire_info.info=info
-    def __init__(prefix, prefix_count, terminal):
+    def __init__subclass__(prefix, prefix_count, terminal):
         prefix.prefix_count = prefix_count
         prefix.terminal = terminal
-    def __init__(suffix, suffix_count, terminal):
+    def __init__subclass__(suffix, suffix_count, terminal):
         suffix.suffix_count = suffix_count
         suffix.terminal = terminal
         
@@ -27,6 +28,7 @@ def graph_maker(kmer_list):
     enum = enumerate(kmer_list) #count the number of strings in the list to prep it for dictionary conversion
 
     kmer_dict = dict((x,y) for x,y in enum)
+    print(kmer_dict)
 
     #send to a dictonary instead of a tuple because a tuple is immutable. 
     lmer1 = []
@@ -53,7 +55,7 @@ def graph_maker(kmer_list):
    
         lmerA = ''
         lmerB = ''
-        for x in range(0,len(lmer1)):   #In theory these should be the same length
+        for x in range(0,len(lmer1)):   #In theory these should be the same length of k_size
             lmerA+= lmer1[x] 
             lmerB+= lmer2[x]
             
@@ -62,12 +64,15 @@ def graph_maker(kmer_list):
         alpha_size = 0
         vertex_count = 0
         coverage = 100 #assuming 100% for the fake_dna sample that chatGPT created
-        prefix_dict = dict(mute_kmer='', vertex_count_str='') 
-        suffix_dict = dict(mute_kmer2='', vertex_count_str2='')
+        prefix_dict = {}
+        suffix_dict = {}
         count2=0
         alpha_size2 =0
         vertex_count2=0
-        for d in range(len(kmer_dict)): #FIND EDGES FOR PREFIX
+        
+        print(len(kmer_dict))
+        
+        for d in range(len(kmer_dict)-1): #FIND EDGES FOR PREFIX
             for a in alpha:
                 alpha_size +=1
                 print("FOR LETTER:", a)
@@ -78,7 +83,8 @@ def graph_maker(kmer_list):
                 if(dict_str == temp_lmer):
                     count1 += 1
                     vertex_count = m.ceil(count1/coverage)
-                    prefix_dict(temp_lmer, vertex_count)
+                    print(vertex_count)
+                    prefix_dict.update({temp_lmer:vertex_count})
                     lmer = u.prefix(prefix_dict, None)
                     lmer.showA()
                     
@@ -86,7 +92,7 @@ def graph_maker(kmer_list):
                     print("Not in dict\n")
                     
         print("\nSUFFIX\n")
-        for d2 in range(len(kmer_dict)): #FIND EDGES FOR SUFFIX
+        for d2 in range(len(kmer_dict)-1): #FIND EDGES FOR SUFFIX
             for a2 in alpha:
                 alpha_size2 +=1
                 print("FOR LETTER:", a2)
@@ -97,7 +103,8 @@ def graph_maker(kmer_list):
                 if(dict_str2 == temp_lmer2):
                     count2 += 1
                     vertex_count2 = m.ceil(count2/coverage)
-                    suffix_dict(temp_lmer2, vertex_count2)
+                    print("In Dict")
+                    suffix_dict.update({temp_lmer2:vertex_count2})
                     lmer = u.suffix(suffix_dict, None)
                     lmer.showB()
                     
