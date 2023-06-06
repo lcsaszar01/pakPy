@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 import os
+import window as win
 
-def reader():
+def reader(k_size):
     flag=True
     curdir = os.path.dirname(__file__)
     fasta_path = os.path.join(curdir+'/fasta_files') #Read in the file from the fasta folder
@@ -16,15 +17,22 @@ def reader():
         fasta_path = os.path.join(fasta_path+"/"+file_name+".fasta")
 
         if(os.path.exists(fasta_path)==True): #If the file exists in the folder 
-            k_size=32
             fd = open(fasta_path, 'r') #read the data from the file in the folder
             
             lines = fd.readlines() 
             fd.close()
-            for lin in lines:
-                print(lin)
-                print(type(lin))
+            for lin in lines: #gets rid of the info line of the file
+                continue
+     
+            curdir = os.path.dirname(__file__) #saves a copy of just the dna string for troubleshooting
+            file_path = curdir+'/fasta_files/dna.txt'
+            dna_list = str(lin)
+            fd = open(file_path, "w")
+            fd.write(dna_list)
+            fd.close() 
             
+            win.window(lin, k_size) #gets the overlapping kmer of a given k_size
+            return
             while(flag!=False):
                 size_of_acids = len(lin)
                 if(size_of_acids%k_size==0): #if the number of acids can be perfectly divided into str of 32 acids or a size before 48
@@ -68,3 +76,5 @@ def reader():
             
         else: #catch 22 for if the file does not exist
             print("Sorry that file does not exist in the fasta_file folder. Please try again...")
+
+reader(32)
