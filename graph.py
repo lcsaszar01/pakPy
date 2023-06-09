@@ -125,12 +125,11 @@ def graph_maker(kmer_list):
     fd.write(str(u.suffixes))
     fd.close()
     print("DONE")
-'''
-        LEFT TO DO:
-			wire_info = w.wire(u.prefixes, u.suffixes)
-			graph = u.wire_info.info()
+
+       
+    wire_info = w.wire(u.prefixes, u.suffixes)
+    graph = u.wire_info(wire_info)
     return graph
-'''
 
 class u:
     def __init__(self, affix_type):
