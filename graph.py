@@ -6,7 +6,7 @@ Inspired by the class tutorials at https://stackoverflow.com/questions/40898482/
 
 import os
 import math as m
-import wire as w 
+#import wire as w 
             
 def graph_maker(kmer_list):
 
@@ -107,8 +107,8 @@ def graph_maker(kmer_list):
     for h in range(ulength):  
         val = ''
         val2 = ''
-        val =  u.count[h],u.terminal[h],u.wire[h]
-        val2 = u.count2[h],u.terminal2[h],u.wire2[h]
+        val =  u.count[h]
+        val2 = u.count2[h]
         u.prefixes.append(val)
         u.suffixes.append(val2)
         
@@ -116,18 +116,18 @@ def graph_maker(kmer_list):
     curdir = os.path.dirname(__file__)
     file_path1 = curdir+'/fasta_files/gd_prefix.txt'
     file_path2 = curdir+'/fasta_files/gd_suffix.txt' 
+    
     fd = open(file_path1, "w")
-    fd.write("_______PREFIXES__________\n")
     fd.write(str(u.prefixes))
     fd.close()
+    
     fd = open(file_path2, "w")
-    fd.write("_______SUFFIXES__________\n") 
     fd.write(str(u.suffixes))
     fd.close()
     print("DONE")
 '''
         LEFT TO DO:
-			wire_info = wire(u)
+			wire_info = w.wire(u.prefixes, u.suffixes)
 			graph = u.wire_info.info()
     return graph
 '''
@@ -181,5 +181,6 @@ for i in kmer_list:
     kmer_list = kmer_list.replace("'", '')
     
 kmer_list = list(kmer_list.split(', '))
+
 graph_maker(kmer_list)
 

@@ -1,33 +1,154 @@
+#!/usr/bin/env python3
+import os
+import time
+import math as m
 
 
-def wire(node):
+def wire(prefix_node, suffix_node):
     sc=0
     pc=0
-    null_side =-1
+    str = ''
+    suf_dict = {}
+    pre_dict = {}
+    str_lst =[]
+    numb_lst = []
+    let_lst = []
+    leftovers = 0
+    offset_in_suffix = []
+    null_sid =-1
     null_pid=-1
-    
-    for i in node.suffix: #calculate the sum of all suffix visists of node
-        sc= sc+node.prefix_count[i].vertex_counts
+    largest_pid = 0
+    pid = []
+    #calculate the sum of all suffix visit counts of node
+    for i in range(len(suffix_node)): 
+        str = suffix_node[i]
+        str = str.replace("'","")
+        str = (str.split(':'))
         
-    for j in node.prefix: #calculate the sum of all prefix visits of node
-        pc = pc+ node.prefix_counts[j].vc
+        for e in str:
+            str_lst.append(e)
+     
+        t = {str_lst[0]:str_lst[-1]}
+        numb_lst.append(str_lst[-1])
+        let_lst.append(str_lst[0])
+        str_lst.clear()
         
-    for k in node.suffix: #initialize and assign value to the null suffix
-        if(node.suffixes[k].size()==0):
-            null_sid = k
-            node.suffice_count[k]=(1,pc-sc)
-            
-    for y in node.prefix: #initialize and assign value to the null prefix
-        if(node.prefix[y].size()==0):
-            null_pid = y
-            node.prefix_count[y] = (1, sc-pc)
-            
-    #Deal with leftovers
-    leftovers = sc+node.suffix_count[null_sid].vc
+        suf_dict.update(t) #The code traverses the data set to srip the data string down to append it to a dict before summing the values for each key
+
+    for y in suf_dict.keys(): #This loop does the actual sumation of the values
+        val = suf_dict.get(y)
+        sc = sc+int(val)
+    print(sc) #returns the value
     
-    '''Initialize a wiring table for the macro-node to hold info realted to every suffix connected to a given prefix'''
-    
-    node.wire_info = (len(node.prefix()))
-            
+    #calcue the sum of all the prefix visit counts of the node
+    for p in range(len(prefix_node)): 
+        str = prefix_node[p]
+        str = str.replace("'","")
+        str = (str.split(':'))
         
-    return 
+        for e in str:
+            str_lst.append(e)
+     
+        t = {str_lst[0]:str_lst[-1]}
+        numb_lst.append(str_lst[-1])
+        let_lst.append(str_lst[0])
+        str_lst.clear()
+        
+        pre_dict.update(t) #The code traverses the data set to srip the data string down to append it to a dict before summing the values for each key
+
+    for t in pre_dict.keys(): #This loop does the actual sumation of the values
+        val = pre_dict.get(t)
+        pc = pc+int(val)
+    print(pc) #returns the value
+    
+    for nu in range(len(prefix_node)): #initialize and assign value to the null suffix
+        if(len(suffix_node[nu])==0):
+            null_sid = 1
+            suf_dict.update({1:(pc-sc)})
+    
+    leftovers = sc+null_sid
+    #Initialie an array to maintain the offsets within each suffix edge
+    val_lst = []
+    i = 0
+    i2 = 0
+    number = 0
+    number2 = 0
+    temp =[]
+    wireinfo = []
+    loop_count = 0
+
+    while(leftovers > 0):
+        
+        for y in pre_dict.keys(): #This loop does the actual sumation of the values
+            valstr = pre_dict.get(y)
+            valstr =valstr.strip(" ")
+            val_lst.append(valstr)
+            
+            if(number < int(valstr)): 
+                number = int(valstr)
+            i += 1
+        largest_pid = number
+        val_lst.clear()
+
+        
+        count = 0
+        for y in suf_dict.keys(): #This loop does the actual sumation of the values
+            valstr = suf_dict.get(y)
+            valstr =valstr.strip(" ")
+            val_lst.append(valstr)
+            
+            if(number2 < int(valstr)): 
+                number2 = int(valstr)
+            i2 += 1
+        
+        largest_sid = number2
+        for i in range(largest_sid):
+            offset_in_suffix.append(0)
+        
+        offset_in_suffix.append(number2)
+        val_lst.clear()
+        
+        counter = min(largest_pid,largest_sid)
+        temp.append(largest_pid)
+        temp.append(offset_in_suffix[largest_sid])
+        temp.append(count)
+        wireinfo.append(temp[loop_count])
+        loop_count += 1
+        leftovers -= counter
+        
+        update = offset_in_suffix[largest_sid] + counter
+        offset_in_suffix.remove(largest_pid)
+        offset_in_suffix.append(update)
+
+    print(offset_in_suffix, "\n")
+    return offset_in_suffix
+
+'''     CALLING THE FUNCTION FOR TESTING     '''
+def run():
+    
+    import os
+    curdir = os.path.dirname(__file__)
+
+    path = os.path.join(curdir+"/fasta_files/gd_prefix.txt")
+    fd = open(path, 'r')
+    pre_str = fd.read()
+    fd.close()
+    path2 = os.path.join(curdir+"/fasta_files/gd_suffix.txt")
+    fd = open(path2, 'r')
+    suf_str = fd.read()
+
+    pre_str = pre_str[1:-1]
+    suf_str =suf_str[1:-1]
+
+    for i in pre_str:
+        pre_str = pre_str.replace("}",'')
+        pre_str = pre_str.replace("{",'')
+    for i in suf_str:
+        suf_str = suf_str.replace("{",'')
+        suf_str = suf_str.replace("}",'')
+        
+    pre_str = list(pre_str.split(','))
+    suf_str = list(suf_str.split(','))
+
+    wire(pre_str,suf_str)
+run()
