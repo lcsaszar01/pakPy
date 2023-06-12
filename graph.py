@@ -6,7 +6,8 @@ Inspired by the class tutorials at https://stackoverflow.com/questions/40898482/
 
 import os
 import math as m
-#import wire as w 
+import wire as w 
+
             
 def graph_maker(kmer_list):
 
@@ -124,11 +125,10 @@ def graph_maker(kmer_list):
     fd = open(file_path2, "w")
     fd.write(str(u.suffixes))
     fd.close()
-    print("DONE")
 
-       
-    wire_info = w.wire(u.prefixes, u.suffixes)
-    graph = u.wire_info(wire_info)
+    wire_info = w.wire(str(u.prefixes), str(u.suffixes))
+    graph = u.wire_info.append(wire_info)
+    print(graph)
     return graph
 
 class u:
@@ -148,6 +148,8 @@ class u:
     count2 = []
     terminal2 = []
     wire2 = []
+    
+    wire_info = []
    
     @staticmethod 
     def prefix_info(count, terminal, wire):
@@ -169,7 +171,7 @@ class u:
             self.affix = u.suffix_info()
 
  
-'''    CALLING THE FUNCTION    '''
+'''    CALLING THE FUNCTION    
 curdir = os.path.dirname(__file__)
 path = os.path.join(curdir+"/fasta_files/dna_kmer.txt")
 fd = open(path, 'r')
@@ -183,3 +185,4 @@ kmer_list = list(kmer_list.split(', '))
 
 graph_maker(kmer_list)
 
+'''

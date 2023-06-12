@@ -19,4 +19,3 @@ def fasta_create():
     fd.write(head +'\n'+ data)
     fd.close()
 
-fasta_create()

@@ -4,7 +4,7 @@ import time
 import math as m
 
 
-def wire(prefix_node, suffix_node):
+def wire(prefix, suffix):
     sc=0
     pc=0
     str = ''
@@ -26,8 +26,25 @@ def wire(prefix_node, suffix_node):
     number2 = 0
     wireinfo = []
     loop_count = 0
-    count = 0
+    count = 0 
+    prefixes = ''
+    suffixes = ''
     
+    #prefrocessing the values into strings
+
+    pre_str = prefix[1:-1]
+    suf_str = suffix[1:-1]
+    
+    for i in pre_str:
+        pre_str = pre_str.replace("}",'')
+        pre_str = pre_str.replace("{",'')
+    for i in suf_str:
+        suf_str = suf_str.replace("{",'')
+        suf_str = suf_str.replace("}",'')
+        
+    prefix_node = list(pre_str.split(','))
+    suffix_node = list(suf_str.split(','))
+
     #calculate the sum of all suffix visit counts of node
     for i in range(len(suffix_node)): 
         str = suffix_node[i]
@@ -127,11 +144,10 @@ def wire(prefix_node, suffix_node):
         
     for d in range(len(pid)):
         wireinfo.insert(d,pid[d])
-
-    print("Done")
+ 
     return offset_in_suffix
 
-'''     CALLING THE FUNCTION FOR TESTING     '''
+'''     CALLING THE FUNCTION FOR TESTING  
 def run():
     
     import os
@@ -159,4 +175,4 @@ def run():
     suf_str = list(suf_str.split(','))
 
     wire(pre_str,suf_str)
-run()
+run()'''

@@ -27,5 +27,5 @@ def window(dna_str, kmer_size):
     fd = open(file_path, "w")
     fd.write(dna_list)
     fd.close()      
-    return
+    return kmer_list
 
