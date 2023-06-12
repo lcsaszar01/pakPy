@@ -1,20 +1,32 @@
 #!/usr/bin/env python3
-
-
 import reads as r
 import fasta as f
+import graph as g
 
+ans = ''
 flag=True
+
 while(flag!=False):
-    ans = input("Do you want to create a fasta file? > ")
-    if(ans=="No"):
-        r.reads()
-        flag=False
-    elif(ans=="Yes"): 
+    ans = input("Do you want to create a fasta file? [Yes/No] > ")
+    
+    if(ans=="Yes" or ans=="yes" or ans=='y' or ans=='Y'): 
         f.fasta_create()
-        flag=False
+        ans2 = input("What kmer size do you want? (Must be between 32-48 char) > ")
+        if(int(ans2)<=48 and int(ans2)>=32):
+            r.reads(int(ans2))
+            flag=False
+        break
+    elif(ans=="No" or ans=='no' or ans=='n' or ans=='N'):
+        ans2 = input("What kmer size do you want? (Must be between 32-48 char) > ")
+        if(int(ans2)<=48 and int(ans2)>=32):
+            dna = r.reader(int(ans2))
+            data = g.graph_maker(dna)
+            flag=False
+        break
     elif(ans=="Quit" or ans=="q"):
         flag=False
+        break
+    
     else: print("Not a valid input please try again...")
 
 

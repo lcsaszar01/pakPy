@@ -4,7 +4,7 @@ import time
 import math as m
 
 
-def wire(prefix_node, suffix_node):
+def wire(prefix, suffix):
     sc=0
     pc=0
     str = ''
@@ -18,7 +18,33 @@ def wire(prefix_node, suffix_node):
     null_sid =-1
     null_pid=-1
     largest_pid = 0
-    pid = []
+    pid = []    
+    val_lst = []
+    i = 0
+    i2 = 0
+    number = 0
+    number2 = 0
+    wireinfo = []
+    loop_count = 0
+    count = 0 
+    prefixes = ''
+    suffixes = ''
+    
+    #prefrocessing the values into strings
+
+    pre_str = prefix[1:-1]
+    suf_str = suffix[1:-1]
+    
+    for i in pre_str:
+        pre_str = pre_str.replace("}",'')
+        pre_str = pre_str.replace("{",'')
+    for i in suf_str:
+        suf_str = suf_str.replace("{",'')
+        suf_str = suf_str.replace("}",'')
+        
+    prefix_node = list(pre_str.split(','))
+    suffix_node = list(suf_str.split(','))
+
     #calculate the sum of all suffix visit counts of node
     for i in range(len(suffix_node)): 
         str = suffix_node[i]
@@ -33,7 +59,7 @@ def wire(prefix_node, suffix_node):
         let_lst.append(str_lst[0])
         str_lst.clear()
         
-        suf_dict.update(t) #The code traverses the data set to srip the data string down to append it to a dict before summing the values for each key
+        suf_dict.update(t) #The code traverses the data set to strip the data string down to append it to a dict before summing the values for each key
 
     for y in suf_dict.keys(): #This loop does the actual sumation of the values
         val = suf_dict.get(y)
@@ -68,14 +94,6 @@ def wire(prefix_node, suffix_node):
     
     leftovers = sc+null_sid
     #Initialie an array to maintain the offsets within each suffix edge
-    val_lst = []
-    i = 0
-    i2 = 0
-    number = 0
-    number2 = 0
-    temp =[]
-    wireinfo = []
-    loop_count = 0
 
     while(leftovers > 0):
         
@@ -89,9 +107,7 @@ def wire(prefix_node, suffix_node):
             i += 1
         largest_pid = number
         val_lst.clear()
-
-        
-        count = 0
+ 
         for y in suf_dict.keys(): #This loop does the actual sumation of the values
             valstr = suf_dict.get(y)
             valstr =valstr.strip(" ")
@@ -109,21 +125,29 @@ def wire(prefix_node, suffix_node):
         val_lst.clear()
         
         counter = min(largest_pid,largest_sid)
-        temp.append(largest_pid)
+       
+        temp=[]
+        
+        temp.append(largest_sid)
         temp.append(offset_in_suffix[largest_sid])
-        temp.append(count)
-        wireinfo.append(temp[loop_count])
-        loop_count += 1
+        temp.append(counter)
+        
+        pid.append(temp)
+        loop_count +=1
+        
         leftovers -= counter
         
         update = offset_in_suffix[largest_sid] + counter
         offset_in_suffix.remove(largest_pid)
-        offset_in_suffix.append(update)
-
-    print(offset_in_suffix, "\n")
+        offset_in_suffix.append(update) 
+        time.sleep(1)
+        
+    for d in range(len(pid)):
+        wireinfo.insert(d,pid[d])
+ 
     return offset_in_suffix
 
-'''     CALLING THE FUNCTION FOR TESTING     '''
+'''     CALLING THE FUNCTION FOR TESTING  
 def run():
     
     import os
@@ -151,4 +175,4 @@ def run():
     suf_str = list(suf_str.split(','))
 
     wire(pre_str,suf_str)
-run()
+run()'''
