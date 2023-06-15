@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import math as m
+import time
 
 def wire(prefix, suffix):
     sc=0
@@ -13,8 +14,8 @@ def wire(prefix, suffix):
     let_lst = []
     leftovers = 0
     offset_in_suffix = []
-    null_sid =-1
-    null_pid=-1
+    null_sid = -1
+    null_pid = -1
     largest_pid = 0
     pid = []    
     val_lst = []
@@ -26,20 +27,22 @@ def wire(prefix, suffix):
     loop_count = 0
     
     #prefrocessing the values into strings
-
     pre_str = prefix[1:-1]
     suf_str = suffix[1:-1]
     
     for i in pre_str:
         pre_str = pre_str.replace("}",'')
         pre_str = pre_str.replace("{",'')
+        print(pre_str)
     for i in suf_str:
         suf_str = suf_str.replace("{",'')
         suf_str = suf_str.replace("}",'')
+        print(suf_str)
         
     prefix_node = list(pre_str.split(','))
     suffix_node = list(suf_str.split(','))
-
+    print("SUFFIX NODES",suffix_node)
+    print("PREFIX NODES",prefix_node)
     #calculate the sum of all suffix visit counts of node
     for i in range(len(suffix_node)): 
         str = suffix_node[i]
@@ -61,7 +64,7 @@ def wire(prefix, suffix):
         sc = sc+int(val)
     print("Total Number of Suffix Visits:", sc) #returns the value
     
-    #calcue the sum of all the prefix visit counts of the node
+    #calculate the sum of all the prefix visit counts of the node
     for p in range(len(prefix_node)): 
         str = prefix_node[p]
         str = str.replace("'","")
@@ -75,19 +78,29 @@ def wire(prefix, suffix):
         let_lst.append(str_lst[0])
         str_lst.clear()
         
-        pre_dict.update(t) #The code traverses the data set to srip the data string down to append it to a dict before summing the values for each key
+        pre_dict.update(t) #The code traverses the data set to strip the data string down to append it to a dict before summing the values for each key
 
     for t in pre_dict.keys(): #This loop does the actual sumation of the values
         val = pre_dict.get(t)
         pc = pc+int(val)
     print("Total Number of Prefix Visits:",pc) #returns the value
     
-    for nu in range(len(prefix_node)): #initialize and assign value to the null suffix
+    for nu in range(len(suffix_node)): #initialize and assign value to the null suffix
+        print("node:", suffix_node[nu],"len:",len(suffix_node[nu]))
+        
         if(len(suffix_node[nu])==0):
-            null_sid = 1
+            null_sid = nu
             suf_dict.update({1:(pc-sc)})
-    
+
+   
+    for nu2 in range(len(prefix_node)): #initialize and assign value to the null prefix
+        if(len(prefix_node[nu2])==0):
+            null_pid = nu2
+            pre_dict.update({1:(sc-pc)})
+    print(null_sid)
     leftovers = sc+null_sid
+    
+
     #Initialie an array to maintain the offsets within each suffix edge
 
     while(leftovers > 0):
@@ -140,21 +153,3 @@ def wire(prefix, suffix):
         wireinfo.insert(d,pid[d])
     print("The Wiring is done")
     return offset_in_suffix
-
-'''     CALLING THE FUNCTION FOR TESTING  
-def run():
-    
-    import os
-    curdir = os.path.dirname(__file__)
-
-    path = os.path.join(curdir+"/fasta_files/gd_prefix.txt")
-    fd = open(path, 'r')
-    pre_str = fd.read()
-    fd.close()
-    path2 = os.path.join(curdir+"/fasta_files/gd_suffix.txt")
-    fd = open(path2, 'r')
-    suf_str = fd.read()
-    
-    wire(pre_str,suf_str)
-    
-run()'''

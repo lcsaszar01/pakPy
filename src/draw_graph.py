@@ -7,7 +7,7 @@ import random
 import numpy as np
 
 def draw():
-    g = netx.Graph()
+    g = netx.MultiDiGraph()
     
     g.add_nodes_from(u.u.labels)
     edge_comp = []

@@ -16,5 +16,9 @@ echo Hello $HOSTNAME
 echo Accesssing $program_name
 echo $welcome_title
 echo $time_stamp
-chmod 777 /src/main.py
+chmod 777 ./src/main.py
+chmod 777 ./src/gpu_check.py
+echo 
+./src/gpu_check.py
+echo  
 ./src/main.py
