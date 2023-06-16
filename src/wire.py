@@ -33,16 +33,16 @@ def wire(prefix, suffix):
     for i in pre_str:
         pre_str = pre_str.replace("}",'')
         pre_str = pre_str.replace("{",'')
-        print(pre_str)
+        #print(pre_str)
     for i in suf_str:
         suf_str = suf_str.replace("{",'')
         suf_str = suf_str.replace("}",'')
-        print(suf_str)
+        #print(suf_str)
         
     prefix_node = list(pre_str.split(','))
     suffix_node = list(suf_str.split(','))
-    print("SUFFIX NODES",suffix_node)
-    print("PREFIX NODES",prefix_node)
+    #print("SUFFIX NODES",suffix_node)
+    #print("PREFIX NODES",prefix_node)
     #calculate the sum of all suffix visit counts of node
     for i in range(len(suffix_node)): 
         str = suffix_node[i]

@@ -3,7 +3,7 @@
 An attempt to create a structure and class for the graphs 
 Inspired by the class tutorials at https://stackoverflow.com/questions/40898482/defining-method-of-class-in-if-statement
 '''
-
+import os
 import math as m
 import wire as w 
 import u as u
@@ -74,9 +74,9 @@ def graph_maker(kmer_list):
                     if(kmer_list[x] == temp_lmer):
                         counter_for_find += 1
                            
-                print("found count:", counter_for_find)
-                print("Letter:", a)
-                print("new kmer", temp_lmer)
+                #print("found count:", counter_for_find)
+                #print("Letter:", a)
+                #print("new kmer", temp_lmer)
                 
                 
                 #If the string exists in the dictionary
@@ -110,9 +110,9 @@ def graph_maker(kmer_list):
                     if(kmer_list[x] == temp_lmer):
                         counter_for_find2 += 1
                            
-                print("found count:", counter_for_find2)
-                print("Letter:", a)
-                print("new kmer", temp_lmer)
+                #print("found count:", counter_for_find2)
+                #print("Letter:", a)
+                #print("new kmer", temp_lmer)
                    
                 #If the string exits in the dictionary
                 u.u.label(lmerA)
@@ -137,5 +137,18 @@ def graph_maker(kmer_list):
     dg.draw()
     
     return 
+curdir = os.path.dirname(__file__)
+head, tail = os.path.split(curdir)
+fd = open(head+"/kmers/dna_kmer_21455.txt", "r")
+val_str = fd.readline()
+fd.close()
+val_lst = []
 
-    
+val_str = val_str.replace("[",'')
+val_str = val_str.replace("]",'')
+val_str = val_str.replace("'",'')
+val_lst = val_str.split(', ')
+print(val_str)
+print(val_lst)
+
+graph_maker(val_lst)
