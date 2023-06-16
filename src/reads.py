@@ -2,6 +2,7 @@
 
 import os
 import window as win
+import time
 
 def reader(k_size):
     flag=True
@@ -21,12 +22,15 @@ def reader(k_size):
         if(os.path.exists(fasta_path)==True): #If the file exists in the folder 
             fd = open(fasta_path, 'r') #read the data from the file in the folder
             
-            lines = fd.readlines() 
-            fd.close()
-            for lin in lines: #gets rid of the info line of the file
-                continue
+            lines = fd.readlines()
             
-            dna = win.window(lin, k_size) #gets the overlapping kmer of a given k_size
+            for lin in lines: #gets rid of the info line of the file
+                if(lin.startswith('>')==False): #passes over info header lines
+                    print(lin)
+                    dna = win.window(lin, k_size) #gets the overlapping kmer of a given k_size
+                else:
+                    continue
+                    
             return dna
         
         else: #catch 22 for if the file does not exist
