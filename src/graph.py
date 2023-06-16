@@ -110,5 +110,7 @@ def graph_maker(kmer_list):
     wire_info = w.wire(str(u.u.count), str(u.u.count2))
     u.u.wire_info.append(wire_info)
     dg.draw()
-
+    
     return 
+
+    

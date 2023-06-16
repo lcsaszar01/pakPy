@@ -3,30 +3,36 @@
 '''The function in this file traverses over the FASTA DNA sequence to capture sequences. 
 starting at a kmer length of 32'''
 
-import os
+import os, random, time
 
 def window(dna_str, kmer_size):
     kmer=''
     count=0
     kmer_list=[]
     dna_list = list(dna_str)
-    for x in range(0,len(dna_list)):
-        for y in range(x,len(dna_list)):
+    cnt = 1
+
+    for x in range(0,((len(dna_list)-1)-kmer_size)):
+        for y in range(x,len(dna_list)-1):
             count += 1
             kmer+=dna_list[y]
-            if(count == kmer_size): 
+            if(count == kmer_size):
+                
                 kmer_list.append(kmer)
                 kmer = ''
                 count = 0
-                break
-    
+                break       
+ 
     curdir = os.path.dirname(__file__)
     head, tail = os.path.split(curdir)
-    file_ext ='/fasta_files/dna_kmer_'+str(os.urandom(1))+'.txt' 
+
+    file_ext ='/kmers/dna_kmer_'+str(random.randint(0,100000))+'.txt' 
     file_path = head+file_ext
-    dna_list = str(kmer_list)
+    mers = str(kmer_list)
     fd = open(file_path, "w")
-    fd.write(dna_list)
-    fd.close()      
+    fd.write(mers)
+    fd.close()
+    kmer_list.clear()  
+    time.sleep(1)    
     return kmer_list
 
