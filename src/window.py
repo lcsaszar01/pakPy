@@ -4,6 +4,7 @@
 starting at a kmer length of 32'''
 
 import os, random, time
+import counter as c
 
 def window(dna_str, kmer_size):
     kmer=''
@@ -26,13 +27,13 @@ def window(dna_str, kmer_size):
     curdir = os.path.dirname(__file__)
     head, tail = os.path.split(curdir)
 
-    file_ext ='/kmers/dna_kmer_'+str(random.randint(0,100000))+'.txt' 
+    file_ext ='/kmers/dna_kmer_'+str(c.globe_count())+'.txt' 
     file_path = head+file_ext
     mers = str(kmer_list)
     fd = open(file_path, "w")
     fd.write(mers)
     fd.close()
     kmer_list.clear()  
-    time.sleep(1)    
+      
     return kmer_list
 

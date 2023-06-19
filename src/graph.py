@@ -12,7 +12,7 @@ import time
 
 def graph_maker(kmer_list):
     print("Setting up graph")
-    coverage = 100 #assuming 100 for the fake_dna sample that chatGPT created
+    coverage = 0.000215 #There is 928,320 DNA fragments in the ecoli.fasta file. The percent value of 1 string is the coverage value
     dict_str = () #takes a string from a dictonary value
 
     #A bunch of value initializations.
@@ -37,7 +37,7 @@ def graph_maker(kmer_list):
     for i in range(len(kmer_dict)):
         kmer_str = kmer_dict[i]
         flag=True
-        while(flag!=False):  #splits total string of dna bases of the best kmer size between 32 and 42
+        while(flag!=False):  #splits the kmer into a kmer-1, creating the string for if the suffix and if the prefix was removed.  
             count +=1
             if(count == 1):
                 kmer_list_temp = list(kmer_str)      
@@ -53,93 +53,88 @@ def graph_maker(kmer_list):
 
         lmerA = ''
         lmerB = ''
-        for x in range(0,len(lmer1)): #In theory these should be the same length of k_size
+        for x in range(0,len(lmer1)): #In theory these should be the same length of k_size, load the values into strings. 
             lmerA+=lmer1[x] 
             lmerB+=lmer2[x]
         
         lmer1.clear()
         lmer2.clear()
         
+        #FIND EDGES FOR PREFIX
         affix = u.u('prefix')#Initialize the data structure for the prefix type in the class 
-        for d in range(len(kmer_dict)-1): #FIND EDGES FOR PREFIX
-            found_countA = 0
-            for a in alpha:
-                dict_str = kmer_dict.get(d)
+        
+        for d in range(len(kmer_dict)-1): # traverse the dictionary for repeading that many times.
+            for a in alpha: #for the letter from our prefix alphabet
+
+                temp_lmer = a+lmerB #creates the kmer-1 of the prefix letter
                 
-                temp_lmer = a+lmerB
-                
-                #see if the string exits in the dict
-                
+                #see if the string has a match in the dict
                 for x in range(len(kmer_dict)):
                     if(kmer_list[x] == temp_lmer):
                         counter_for_find += 1
-                           
-                #print("found count:", counter_for_find)
-                #print("Letter:", a)
-                #print("new kmer", temp_lmer)
-                
-                
-                #If the string exists in the dictionary
-                u.u.label(lmerB)
-                u.u.prefixes.append(a) #appended the prefix letter to the prefixes list
-                #Gives us the number of vertices that the string should have
-                vertex_count = m.ceil(counter_for_find/coverage)
-                app = {counter_for_find:vertex_count}
-                prefix_dict.update(app)
-                logic = vertex_count==1
-                temp=[]
-                temp = app.copy()
-                
-                if(logic is True): #Marks a terminal node if edge is 1
-                    affix.prefix_info(temp, 1)    
-                else:
-                    affix.prefix_info(temp, 0)                        
+                        
+                #print(counter_for_find)    
+                if(counter_for_find > 0): 
+                    u.u.label(lmerB) #Adds the kmer-1 before the letter is appended
+                    vertex_count = m.ceil(counter_for_find/coverage)#Gives us the number of vertices that the string should have
+                    
+                    if(counter_for_find==1): #Marks a terminal node if edge is 1
+                        affix.prefix_info(a, vertex_count, counter_for_find, 1)
+                        u.u.node.update({lmerB:u.u.node_info.copy()})
+                        u.u.node_info.clear()
+                        
+                    else:
+                        affix.prefix_info(a, vertex_count, counter_for_find, 0)
+                        u.u.node.update({lmerB:u.u.node_info.copy()})
+                        u.u.node_info.clear()
+                       
+                                          
                 counter_for_find = 0
-            found_countA = 0
+            
+            
         lmerB=''
-    
-        
+         
         affix2 = u.u('suffix') #Initialize the data structure for the suffix type in the class
         for d2 in range(len(kmer_dict)-1): #FIND EDGES FOR SUFFIX
             for a2 in alpha:
-                dict_str2 = kmer_dict.get(d2)
-                temp_lmer2 = lmerA+a2
                 
+                temp_lmer = lmerA+a2
                 #see if the string exits in the dict
                 for x in range(len(kmer_dict)):
                     if(kmer_list[x] == temp_lmer):
                         counter_for_find2 += 1
-                           
-                #print("found count:", counter_for_find2)
-                #print("Letter:", a)
-                #print("new kmer", temp_lmer)
                    
-                #If the string exits in the dictionary
-                u.u.label(lmerA)
-                u.u.suffixes.append(a2) #appends the letter which makes the string match to the list
-                #Gives us the number of vertices that the string should have
-                vertex_count2 = m.ceil(counter_for_find2/coverage)          
-                app2 = {counter_for_find2:vertex_count2}
-                suffix_dict.update(app2)
-                logic2 = vertex_count2==1
-                temp2=[]
-                temp2 = app2.copy()
-        
-                if(logic2 is True): #Marks a terminal node if edge is 1
-                    affix2.suffix_info(temp2, 1)
-                else:
-                    affix2.suffix_info(temp2, 0)  
+                
+                if(counter_for_find > 0): 
+                    u.u.label(lmerA) #Adds the kmer-1 before the letter is appended
+                    vertex_count2 = m.ceil(counter_for_find2/coverage) #Gives us the number of vertices that the string should have         
+            
+                    if(counter_for_find==1): #Marks a terminal node if edge is 1
+                        affix2.suffix_info(a, vertex_count2, counter_for_find2, 1)
+                        u.u.node.update({lmerA:u.u.node_info.copy()})
+                        u.u.node_info.clear() 
+                    else:
+                        affix2.suffix_info(a, vertex_count2, counter_for_find2, 0)  
+                        u.u.node.update({lmerA:u.u.node_info.copy()})
+                        u.u.node_info.clear()
+                        
                 counter_for_find2 = 0
         lmerA=''  
     print("sending to wire...")    
-    wire_info = w.wire(str(u.u.count), str(u.u.count2))
-    u.u.wire_info.append(wire_info)
+    
+    #wire_info = w.wire(str(u.u.vertex_count), str(u.u.vertex_count2))
+    #u.u.wire_info.append(wire_info)
+    #print(len(u.u.wire_info), u.u.wire_info)
+    
     dg.draw()
     
     return 
+
+"""Calls the function using the file so that it doesn't have to generate all of the kmer from each DNA line of ecoli.fasta
+
 curdir = os.path.dirname(__file__)
 head, tail = os.path.split(curdir)
-fd = open(head+"/kmers/dna_kmer_21455.txt", "r")
+fd = open(head+"/kmers/dna_kmer_26834.txt", "r")
 val_str = fd.readline()
 fd.close()
 val_lst = []
@@ -148,7 +143,6 @@ val_str = val_str.replace("[",'')
 val_str = val_str.replace("]",'')
 val_str = val_str.replace("'",'')
 val_lst = val_str.split(', ')
-print(val_str)
-print(val_lst)
 
 graph_maker(val_lst)
+"""

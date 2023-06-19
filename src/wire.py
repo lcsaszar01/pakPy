@@ -41,8 +41,7 @@ def wire(prefix, suffix):
         
     prefix_node = list(pre_str.split(','))
     suffix_node = list(suf_str.split(','))
-    #print("SUFFIX NODES",suffix_node)
-    #print("PREFIX NODES",prefix_node)
+
     #calculate the sum of all suffix visit counts of node
     for i in range(len(suffix_node)): 
         str = suffix_node[i]
@@ -86,7 +85,7 @@ def wire(prefix, suffix):
     print("Total Number of Prefix Visits:",pc) #returns the value
     
     for nu in range(len(suffix_node)): #initialize and assign value to the null suffix
-        print("node:", suffix_node[nu],"len:",len(suffix_node[nu]))
+        #print("node:", suffix_node[nu],"len:",len(suffix_node[nu]))
         
         if(len(suffix_node[nu])==0):
             null_sid = nu
@@ -97,7 +96,7 @@ def wire(prefix, suffix):
         if(len(prefix_node[nu2])==0):
             null_pid = nu2
             pre_dict.update({1:(sc-pc)})
-    print(null_sid)
+    #print(null_sid)
     leftovers = sc+null_sid
     
 
