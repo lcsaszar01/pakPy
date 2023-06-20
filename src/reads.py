@@ -9,6 +9,7 @@ def reader(k_size):
     curdir = os.path.dirname(__file__)
     head, tail = os.path.split(curdir)
     fasta_path = os.path.join(head+"/fasta_files")
+    dna = []
     
     while(flag is True):
         file_name = input("Please enter the name of the file you want to analize. > ") 

@@ -4,11 +4,12 @@ import os
 
 def compact(graph, node_threshold):
     num_nodes = 0
+    threshold = 100000 #number taken from suggested value in paper.
     I = []
     num_nodes = len(graph)
     
     while(num_nodes > node_threshold):
-        I  = gen_independ_set(graph)
+        I  = generate_indep_set(graph)
         '''
         For every node u that exists in I, pass u.pred_ext to u's successor and u.succ_ext to u's predecessor, and then delete u.
         Iterate_and_pack_node returns the lst of neightboring nodes to be modifided. 
@@ -28,3 +29,7 @@ def compact(graph, node_threshold):
         #global_graph = MPI_Allgatherv(graph)
         
     return(pcontig_lst, begin_kmer_lst) #will need global_graph for once  the MPI or MPI alterative for python
+
+def generate_indep_set(node_dict):
+    for node in u.u.node_dict:
+        print(node)

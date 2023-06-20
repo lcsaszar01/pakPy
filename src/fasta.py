@@ -15,7 +15,7 @@ def fasta_create():
     curdir = os.path.dirname(__file__)
     file_path = curdir+'/fasta_files/'+ file_name
     
-    fd = open(file_path, "w")
+    fd = open(file_path, "w+")
     fd.write(head +'\n'+ data)
     fd.close()
 

@@ -16,10 +16,6 @@ def graph_maker(kmer_list):
     dict_str = () #takes a string from a dictonary value
 
     #A bunch of value initializations.
-    prefix_dict = {}
-    suffix_dict = {}
-    found_countA = 0
-    found_countB = 0
     vertex_count = 0
     vertex_count2= 0    
     counter_for_find = 0
