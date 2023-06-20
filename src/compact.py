@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import pickle, pi
 
 def compact(graph, node_threshold):
     num_nodes = 0
@@ -30,6 +31,69 @@ def compact(graph, node_threshold):
         
     return(pcontig_lst, begin_kmer_lst) #will need global_graph for once  the MPI or MPI alterative for python
 
-def generate_indep_set(node_dict):
+def generate_indep_set(node_dict,kmer_size):
+    I = []
     for node in u.u.node_dict:
-        print(node)
+        key = len(node)
+        max_kmer = key
+        for i in len(u.u.node.get(node)):
+            if len(i) >- kmer_size-1:
+                pred_node = i
+            else :
+                remainder = (kmer_size-1)-len(i)
+                pred_node = i+key[0:remainder]
+            if pred_node > key:
+                max_kmer=pred_node
+                break
+            
+        for u in len(u.u.node.get(node)):
+            vals = u.u.node.get(node)
+            if vals.get('type')=='suffix':
+                if len(j) >- (kmer_size-1):
+                    succ_node = j[(kmer_size-1):]
+                else:
+                    remainder = (kmer_size-1)-len(j)
+                    succ_node = key([-remainder:]+j)
+                if succ_node > key:
+                    max_kmer = succ_node
+                    break
+        if max_kmer == key:
+            I.append(node)
+                
+        return I
+    
+def iterate_and_pack_node(node_dict, I, kmer_size):
+    for node in I:
+        for prefix in len(u.u.wire_info):
+            pid = prefix
+            if len(node_dict) > 0 and node_dict.get('terminal') == 0:
+                pass
+                
+    return transfer_nodeInfo, pcontig_list
+
+'''the function below was inspired by the serialization methods of https://www.knowledgehut.com/tutorials/python-tutorial/python-object-serialization#:~:text=Python%20%2D%20Object%20Serialization-,Object%20serialization%20is%20the%20process%20of%20converting%20state%20of%20an,object%20from%20the%20byte%20stream.'''
+
+def serialize_and_transfer(node_dict, transfer_nodeInfo, kmer_size):
+    serial_buffer = []
+    deserial_buffer = []
+    for x in len(transfer_nodeInfo):
+        serial_buffer.append(pickle.dumps(transfer_nodeInfo[x]))
+    deserial_buffer.append(serial_buffer)
+    while(len(deserial_buffer) != 0):
+        n = pickle.loads(deserial_buffer)
+        for gnode in node_dict:
+            if n == gnode:
+                fnode =gnode
+                type = node_dict.get(gnode)
+                
+                affix = type.get('type')
+                if affix is 'suffix':
+                    for o in range(len(gnode)):
+                        idx = fnode.get(key).get(s_letter)
+                        if idx == pred_next:
+                            pass
+                            
+                else:
+                    for y in range(len(gnode)):
+                        idx = fnode.get(key).get(p_letter)
+                        

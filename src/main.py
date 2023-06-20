@@ -3,6 +3,7 @@ import reads as r
 import fasta as f
 import graph as g
 import timer as t
+import compact as pact
 
 ans = ''
 flag=True
@@ -23,6 +24,7 @@ while(flag!=False):
             t.start()
             dna = r.reader(int(ans2))
             data = g.graph_maker(dna)
+            pact.compact(dna, 100000, ans2)
             t.stop()
             t.stopwatch()
             flag=False

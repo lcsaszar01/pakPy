@@ -124,7 +124,7 @@ def graph_maker(kmer_list):
     
     dg.draw()
     
-    return 
+    return u.u.node 
 
 """Calls the function using the file so that it doesn't have to generate all of the kmer from each DNA line of ecoli.fasta
 
