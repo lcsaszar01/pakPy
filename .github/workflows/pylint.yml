@@ -18,7 +18,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pylint
-        pip install pickle
         pip install networkx
         pip install tensorflow
         pip install keras
