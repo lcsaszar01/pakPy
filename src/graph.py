@@ -116,10 +116,14 @@ def graph_maker(kmer_list):
                         
                 counter_for_find2 = 0
         lmerA=''  
-    print("sending to wire...")    
-    
-    #wire_info = w.wire(str(u.u.vertex_count), str(u.u.vertex_count2))
-    #u.u.wire_info.append(wire_info)
+    print("sending to wire...") 
+    for p in range(len(u.u.node)):
+        if(u.u.node.get(p).get('Type')=='Prefix'):
+            u.u.visit_count.append(u.u.node.get(p).get('')) 
+        else:
+            u.u.visit_count.append(u.u.node.get(p).get('')) 
+    wire_info = w.wire(str(u.u.visit_count), str(u.u.visit_count2))
+    u.u.wire_info.append(wire_info)
     #print(len(u.u.wire_info), u.u.wire_info)
     
     dg.draw()
