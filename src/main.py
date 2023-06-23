@@ -3,8 +3,10 @@ import reads as r
 import fasta as f
 import graph as g
 import timer as t
-import compact as pact
+#import compact as pact
 
+import sys
+sys.dont_write_bytecode = True
 ans = ''
 flag=True
 
@@ -23,8 +25,7 @@ while(flag!=False):
         if(int(ans2)<=48 and int(ans2)>=32):
             t.start()
             dna = r.reader(int(ans2))
-            data = g.graph_maker(dna)
-            pact.compact(dna, 100000, ans2)
+            #pact.compact(dna, 100000, ans2)
             t.stop()
             t.stopwatch()
             flag=False

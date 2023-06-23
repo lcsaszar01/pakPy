@@ -3,7 +3,6 @@ import os
 import networkx as netx
 import matplotlib.pyplot as plt
 import u
-import random
 import numpy as np
 import counter as c
 

@@ -12,13 +12,12 @@ program_name=PakPy
 
 
 ###### MAIN ########
-echo Hello $HOSTNAME 
-echo Accesssing $program_name
 echo $welcome_title
+echo Accesssing $program_name
 echo $time_stamp
 chmod 777 ./src/main.py
 chmod 777 ./src/gpu_check.py
-echo 
+echo
 ./src/gpu_check.py
 echo  
 ./src/main.py

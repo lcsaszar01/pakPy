@@ -62,7 +62,7 @@ def generate_indep_set(node_dict,kmer_size):
                 
         return I
     
-def iterate_and_pack_node(node_dict, I, kmer_size):
+def iterate_and_pack(node_dict, I, kmer_size):
     for node in I:
         for prefix in len(u.u.wire_info):
             pid = prefix
