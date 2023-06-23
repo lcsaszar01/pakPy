@@ -2,7 +2,8 @@
 
 import math as m
 import time
-
+import sys
+sys.dont_write_bytecode = True
 def wire(prefix, suffix):
     sc=0
     pc=0
@@ -26,62 +27,15 @@ def wire(prefix, suffix):
     wireinfo = []
     loop_count = 0
     
-    #prefrocessing the values into strings
-    pre_str = prefix[1:-1]
-    suf_str = suffix[1:-1]
-    
-    for i in pre_str:
-        pre_str = pre_str.replace("}",'')
-        pre_str = pre_str.replace("{",'')
-        #print(pre_str)
-    for i in suf_str:
-        suf_str = suf_str.replace("{",'')
-        suf_str = suf_str.replace("}",'')
-        #print(suf_str)
-        
-    prefix_node = list(pre_str.split(','))
-    suffix_node = list(suf_str.split(','))
-
-    #calculate the sum of all suffix visit counts of node
+    suffix_node = suffix
     for i in range(len(suffix_node)): 
-        str = suffix_node[i]
-        str = str.replace("'","")
-        str = (str.split(':'))
-        
-        for e in str:
-            str_lst.append(e)
-     
-        t = {str_lst[0]:str_lst[-1]}
-        numb_lst.append(str_lst[-1])
-        let_lst.append(str_lst[0])
-        str_lst.clear()
-        
-        suf_dict.update(t) #The code traverses the data set to strip the data string down to append it to a dict before summing the values for each key
-
-    for y in suf_dict.keys(): #This loop does the actual sumation of the values
-        val = suf_dict.get(y)
-        sc = sc+int(val)
+        sc = sc+int(i)
     print("Total Number of Suffix Visits:", sc) #returns the value
     
     #calculate the sum of all the prefix visit counts of the node
+    prefix_node = prefix
     for p in range(len(prefix_node)): 
-        str = prefix_node[p]
-        str = str.replace("'","")
-        str = (str.split(':'))
-        
-        for e in str:
-            str_lst.append(e)
-     
-        t = {str_lst[0]:str_lst[-1]}
-        numb_lst.append(str_lst[-1])
-        let_lst.append(str_lst[0])
-        str_lst.clear()
-        
-        pre_dict.update(t) #The code traverses the data set to strip the data string down to append it to a dict before summing the values for each key
-
-    for t in pre_dict.keys(): #This loop does the actual sumation of the values
-        val = pre_dict.get(t)
-        pc = pc+int(val)
+        pc = pc+int(p)
     print("Total Number of Prefix Visits:",pc) #returns the value
     
     for nu in range(len(suffix_node)): #initialize and assign value to the null suffix
@@ -96,7 +50,7 @@ def wire(prefix, suffix):
         if(len(prefix_node[nu2])==0):
             null_pid = nu2
             pre_dict.update({1:(sc-pc)})
-    #print(null_sid)
+    
     leftovers = sc+null_sid
     
 

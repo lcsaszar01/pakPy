@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import time
+import sys
+sys.dont_write_bytecode = True
 
 def start():
     return time.process_time_ns()

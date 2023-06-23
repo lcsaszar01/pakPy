@@ -2,6 +2,7 @@
 
 import os, sys 
 
+sys.dont_write_bytecode = True
 def walk(c, freq, mii, prefix_id):
     return 0
     

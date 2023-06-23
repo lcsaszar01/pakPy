@@ -9,7 +9,8 @@ import wire as w
 import u as u
 import draw_graph as dg
 import time
-
+import sys
+sys.dont_write_bytecode = True
 def graph_maker(kmer_list):
     print("Setting up graph")
     coverage = 0.000215 #There is 928,320 DNA fragments in the ecoli.fasta file. The percent value of 1 string is the coverage value
@@ -58,7 +59,8 @@ def graph_maker(kmer_list):
         
         #FIND EDGES FOR PREFIX
         affix = u.u('prefix')#Initialize the data structure for the prefix type in the class 
-        
+        print(lmerB)
+        print(lmerA)
         for d in range(len(kmer_dict)-1): # traverse the dictionary for repeading that many times.
             for a in alpha: #for the letter from our prefix alphabet
 
@@ -71,6 +73,7 @@ def graph_maker(kmer_list):
                         
                 #print(counter_for_find)    
                 if(counter_for_find > 0): 
+                    
                     u.u.label(lmerB) #Adds the kmer-1 before the letter is appended
                     vertex_count = m.ceil(counter_for_find/coverage)#Gives us the number of vertices that the string should have
                     
@@ -117,16 +120,9 @@ def graph_maker(kmer_list):
                 counter_for_find2 = 0
         lmerA=''  
     print("sending to wire...") 
-    for p in range(len(u.u.node)):
-        if(u.u.node.get(p).get('Type')=='Prefix'):
-            u.u.visit_count.append(u.u.node.get(p).get('')) 
-        else:
-            u.u.visit_count.append(u.u.node.get(p).get('')) 
     wire_info = w.wire(str(u.u.visit_count), str(u.u.visit_count2))
     u.u.wire_info.append(wire_info)
-    #print(len(u.u.wire_info), u.u.wire_info)
-    
-    dg.draw()
+    print(len(u.u.wire_info), u.u.wire_info)
     
     return u.u.node 
 

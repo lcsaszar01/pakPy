@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-'''Credit to @Dennis Ganzaroli From Medium for this code for MacOS
+'''Credit to @Dennis Ganzaroli From Medium for creating this code.
 https://medium.com/mlearning-ai/install-tensorflow-on-mac-m1-m2-with-gpu-support-c404c6cfb580'''
 
 
@@ -13,10 +13,9 @@ import tensorflow as tf
 import platform
 
 print(f"Python Platform: {platform.platform()}")
+print(f"Python {sys.version}")
 print(f"Tensor Flow Version: {tf.__version__}")
 print(f"Keras Version: {keras.__version__}")
-print()
-print(f"Python {sys.version}")
 print(f"Pandas {pd.__version__}")
 print(f"Scikit-Learn {sk.__version__}")
 print(f"SciPy {sp.__version__}")
