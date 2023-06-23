@@ -5,6 +5,8 @@ import graph as g
 import timer as t
 #import compact as pact
 
+import sys
+sys.dont_write_bytecode = True
 ans = ''
 flag=True
 
