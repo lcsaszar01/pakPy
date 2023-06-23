@@ -1,3 +1,10 @@
+#major credit is due to this githubber for creating the outline for this lifesaver of a file https://github.com/martinohanlon/flightlight/issues/1
+
+#created files
+/fasta_files
+/graph_images
+/kmers
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

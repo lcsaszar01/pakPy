@@ -53,6 +53,7 @@ def wire(prefix, suffix):
     
     leftovers = sc+null_sid
     
+    #tests
 
     #Initialie an array to maintain the offsets within each suffix edge
 
