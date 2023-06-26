@@ -2,8 +2,7 @@
 
 import math as m
 import time
-import sys
-sys.dont_write_bytecode = True
+
 def wire(prefix, suffix):
     sc=0
     pc=0
