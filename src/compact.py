@@ -1,22 +1,23 @@
 #!/usr/bin/env python3
 
 import os
-import pickle, pi
+import pickle as pk
 
-def compact(graph, node_threshold):
+def compact(nodes, kmer_size):
     num_nodes = 0
-    threshold = 100000 #number taken from suggested value in paper.
+    node_threshold = 100000 #number taken from suggested value in paper.
     I = []
-    num_nodes = len(graph)
+    num_nodes = len(nodes)
+    begin_kmer_lst = []
     
     while(num_nodes > node_threshold):
-        I  = generate_indep_set(graph)
+        I  = generate_indep_set(nodes, kmer_size)
         '''
         For every node u that exists in I, pass u.pred_ext to u's successor and u.succ_ext to u's predecessor, and then delete u.
         Iterate_and_pack_node returns the lst of neightboring nodes to be modifided. 
         '''
-        (transwer_nodeInfo, pcontig_list) = iterate_and_pack(I,graph)
-        New_size = len(graph)-len(I)
+        transwer_nodeInfo, pcontig_lst = iterate_and_pack(I,nodes)
+        New_size = len(nodes)-len(I)
         
         '''
         Inform all nodes that are neightbors of deleted nodes in I so that they can update their extensions.
@@ -24,16 +25,16 @@ def compact(graph, node_threshold):
         Alternative:
         '''
         
-        rewire_nodes_lst = serialize_and_transfer(transwer_nodeInfo, graph)
-        
+        rewire_nodes_lst = serialize_and_transfer(transwer_nodeInfo, nodes)
+        begin_kmer_lst.append(rewire_nodes_lst)
         '''below psudocode needed for threading'''
-        #global_graph = MPI_Allgatherv(graph)
+        #global_nodes = MPI_Allgatherv(nodes)
         
-    return(pcontig_lst, begin_kmer_lst) #will need global_graph for once  the MPI or MPI alterative for python
+    return pcontig_lst, begin_kmer_lst #will need global_nodes for once  the MPI or MPI alterative for python
 
 def generate_indep_set(node_dict,kmer_size):
     I = []
-    for node in u.u.node_dict:
+    for node in node_dict:
         key = len(node)
         max_kmer = key
         for i in len(u.u.node.get(node)):

@@ -4,8 +4,9 @@ import os
 import window as win
 import time
 import graph as g
-import sys
-sys.dont_write_bytecode = True
+import compact as c
+import u
+
 def reader(k_size):
     flag=True
     curdir = os.path.dirname(__file__)
@@ -27,12 +28,13 @@ def reader(k_size):
             
             lines = fd.readlines()
             
-            for lin in lines[0:6]: #gets rid of the info line of the file
+            for lin in lines[0:2]: #gets rid of the info line of the file
                 #number limitation is a temp fix for not allowing it to run all the data and fill up the HD
                 if(lin.startswith('>')==False): #passes over info header lines
                     print(lin) 
                     dna = win.window(lin, k_size) #gets the overlapping kmer of a given k_size
                     g.graph_maker(dna)
+                    values = c.compact(u.macro_node.lmers_and_attrs,k_size)
                 else:
                     continue
                     
