@@ -2,7 +2,7 @@
 import reads as r
 import fasta as f
 import graph as g
-import timer as t
+import stats as t
 #import compact as pact
 
 import sys
@@ -11,8 +11,8 @@ ans = ''
 flag=True
 
 while(flag!=False):
-    ans = input("Do you want to create a fasta file? [Yes/No] > ")
-    
+    #ans = input("Do you want to create a fasta file? [Yes/No] > ")
+    ans = 'n'
     if(ans=="Yes" or ans=="yes" or ans=='y' or ans=='Y'): 
         f.fasta_create()
         ans2 = input("What kmer size do you want? (Must be between 32-48 char) > ")
@@ -21,7 +21,8 @@ while(flag!=False):
             flag=False
         break
     elif(ans=="No" or ans=='no' or ans=='n' or ans=='N'):
-        ans2 = input("What kmer size do you want? (Must be between 32-48 char) > ")
+        #ans2 = input("What kmer size do you want? (Must be between 32-48 char) > ")
+        ans2 = 32
         if(int(ans2)<=48 and int(ans2)>=32):
             t.start()
             dna = r.reader(int(ans2))
@@ -30,7 +31,7 @@ while(flag!=False):
             t.stopwatch()
             flag=False
         break
-    elif(ans=="Quit" or ans=="q"):
+    elif(ans=="Quit" or ans=="q" or ans=="exit"):
         flag=False
         break
     

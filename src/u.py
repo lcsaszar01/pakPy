@@ -1,15 +1,40 @@
 #!/usr/bin/env python3
 
-class node:
-    def __init__(self, lmer, type, affix, counts, terminal):
-        self.lmer = lmer
-        self.type = type
-        self.affix = affix
-        self.counts = counts
-        self.terminal = terminal
-    
-    def __str__(self):
-        return f"{self.lmer}','{self.type}','{self.affix}','{self.counts}','{self.terminal}'\n'"  
-    
-    
+from dataclasses import dataclass
+import time
+
+@dataclass
+class macro_node():
+    lmers_and_attrs = []
+    type = []
+    affix = []
+    counts = []
+    terminal = []
+    temp = []
+    temp2 = []
+    wire_info=[]
+
+    @staticmethod
+    def createNodes(lmer, type, affix, counts, terminal):
+        macro_node.type.append(type)
+        macro_node.affix.append(affix)
+        macro_node.counts.append(counts)
+        macro_node.terminal.append(terminal)
+        macro_node.temp2.append(lmer)
+        macro_node.temp.append(macro_node.type.pop(0))
+        macro_node.temp.append(macro_node.affix.pop(0))
+        macro_node.temp.append(macro_node.counts.pop(0))
+        macro_node.temp.append(macro_node.terminal.pop(0))
+        
+        macro_node.temp2.append(macro_node.temp.copy())
+        macro_node.temp.clear()
+        macro_node.lmers_and_attrs.append(macro_node.temp2.copy())
+        macro_node.temp2.clear()
+        
+        
+            
+    @staticmethod
+    def updateNodes():
+        pass
+        
     
