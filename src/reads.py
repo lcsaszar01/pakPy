@@ -15,8 +15,8 @@ def reader(k_size):
     dna = []
     
     while(flag is True):
-        file_name = input("Please enter the name of the file you want to analize. > ") 
-        
+        #file_name = input("Please enter the name of the file you want to analize. > ") 
+        file_name = 'ecoli'
         if(file_name == "quit" or file_name == "q"): #exit option
             flag == False
             break
@@ -33,8 +33,9 @@ def reader(k_size):
                 if(lin.startswith('>')==False): #passes over info header lines
                     print(lin) 
                     dna = win.window(lin, k_size) #gets the overlapping kmer of a given k_size
-                    g.graph_maker(dna)
-                    values = c.compact(u.macro_node.lmers_and_attrs,k_size)
+                    graph = g.graph_maker(dna)
+                    pcontig_lst, begin_kmer_lst = c.compact(graph,k_size)
+                    
                 else:
                     continue
                     

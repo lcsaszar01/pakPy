@@ -129,4 +129,4 @@ def graph_maker(kmer_list):
     u.macro_node.wire_info.extend(wire_info)
     
     
-    return  
+    return u.macro_node.lmers_and_attrs 
