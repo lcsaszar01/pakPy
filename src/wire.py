@@ -9,9 +9,6 @@ def wire(cnt_lst):
     
     suf_dict = []
     pre_dict = []
-    str_lst =[]
-    numb_lst = []
-    let_lst = []
     leftovers = 0
     offset_in_suffix = []
     null_sid = -1
@@ -71,7 +68,8 @@ def wire(cnt_lst):
     
     #Initialie an array to maintain the offsets within each suffix edge
     while(leftovers > 0):
-        
+        number = 0
+        number2 = 0
         for y in prefix_node: #This loop does the actual sumation of the values
             
             valstr = y
@@ -79,6 +77,8 @@ def wire(cnt_lst):
             if(number < valstr): 
                 number = valstr
             i += 1
+            
+            #print("valstr",valstr, "i",i,"number",number)
           
         largest_pid = number
       
@@ -98,25 +98,22 @@ def wire(cnt_lst):
 
         offset_in_suffix.append(number2)
         val_lst.clear()
-        #print(largest_pid,largest_sid)
+        
         counter = min(largest_pid,largest_sid)
-        #print("COUNTER",counter)
+        
         temp2 = []
         temp2.append(largest_sid)
         temp2.append(offset_in_suffix[largest_sid])
         temp2.append(counter)
         
         pid.append(temp2)
-        temp2.clear()
-        loop_count +=1
-        
+    
         leftovers -= counter
         
         update = offset_in_suffix[largest_sid] + counter
         offset_in_suffix.remove(largest_pid)
         offset_in_suffix.append(update) 
-        if loop_count != i:
-            break
+
     for d in range(len(pid)):
         wireinfo.insert(d,pid[d])
     print("The Wiring is done")

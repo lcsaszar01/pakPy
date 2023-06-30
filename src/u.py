@@ -30,9 +30,7 @@ class macro_node():
         macro_node.temp.clear()
         macro_node.lmers_and_attrs.append(macro_node.temp2.copy())
         macro_node.temp2.clear()
-        
-        
-            
+           
     @staticmethod
     def updateNodes():
         pass
