@@ -32,7 +32,18 @@ class macro_node():
         macro_node.temp2.clear()
            
     @staticmethod
-    def updateNodes():
+    def updateNodes(lmer, type, affix, counts, terminal, wire_info):
+        
         pass
+    
+    @staticmethod
+    def clearNodes():
+        macro_node.type.clear()
+        macro_node.affix.clear()
+        macro_node.counts.clear()
+        macro_node.terminal.clear()
+        macro_node.temp2.clear()
+        macro_node.lmers_and_attrs.clear()
+        
         
     

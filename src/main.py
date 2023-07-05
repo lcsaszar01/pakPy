@@ -3,13 +3,13 @@ import reads as r
 import fasta as f
 import graph as g
 import stats as t
-#import compact as pact
+import compact as pact
+import gpu_check as check
 
-import sys
-sys.dont_write_bytecode = True
 ans = ''
 flag=True
 
+check.precheck()
 while(flag!=False):
     #ans = input("Do you want to create a fasta file? [Yes/No] > ")
     ans = 'n'
@@ -24,10 +24,10 @@ while(flag!=False):
         #ans2 = input("What kmer size do you want? (Must be between 32-48 char) > ")
         ans2 = 32
         if(int(ans2)<=48 and int(ans2)>=32):
-            t.start()
+            
             dna = r.reader(int(ans2))
-            #pact.compact(dna, 100000, ans2)
-            t.stop()
+            pact.compact(dna, ans2)
+            
             t.stopwatch()
             flag=False
         break

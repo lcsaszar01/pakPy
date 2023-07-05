@@ -7,6 +7,7 @@ welcome_title="Welcome!"
 right_now="$(date +"%x %r %Z")"
 time_stamp="Accessed on $right_now by $USER"
 program_name=PakPy
+
 ####### FUNCTIONS #######
 
 
@@ -16,8 +17,6 @@ echo $welcome_title
 echo Accesssing $program_name
 echo $time_stamp
 chmod 777 ./src/main.py
-chmod 777 ./src/gpu_check.py
-echo
-./src/gpu_check.py
 echo  
-./src/main.py
+./src/main.py > output_file.txt 2>&1
+echo DONE
