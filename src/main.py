@@ -24,10 +24,7 @@ while(flag!=False):
         #ans2 = input("What kmer size do you want? (Must be between 32-48 char) > ")
         ans2 = 32
         if(int(ans2)<=48 and int(ans2)>=32):
-            
-            dna = r.reader(int(ans2))
-            pact.compact(dna, ans2)
-            
+            dna = r.reader(int(ans2)) 
             t.stopwatch()
             flag=False
         break

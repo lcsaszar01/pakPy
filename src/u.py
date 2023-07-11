@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from dataclasses import dataclass
-import time
+
 
 @dataclass
 class macro_node():
@@ -32,9 +32,10 @@ class macro_node():
         macro_node.temp2.clear()
            
     @staticmethod
-    def updateNodes(lmer, type, affix, counts, terminal, wire_info):
+    def updateNode(info_to_update):
+        for i in range(len(macro_node.lmers_and_attrs)):
+            macro_node.lmers_and_attrs[i][1].extend(info_to_update[0])
         
-        pass
     
     @staticmethod
     def clearNodes():

@@ -14,7 +14,6 @@ def wire(cnt_lst):
     null_sid = -1
     null_pid = -1
     largest_pid = 0
-    pid = []    
     val_lst = []
     i = 0
     i2 = 0
@@ -66,6 +65,9 @@ def wire(cnt_lst):
    
     #Initialie an array to maintain the offsets within each suffix edge
     print("Working on the offset")
+    for g in range(len(suffix)):
+        offset_in_suffix.append(0)
+        
     while(leftovers > 0):
         number = 0
         number2 = 0
@@ -101,21 +103,15 @@ def wire(cnt_lst):
         counter = min(largest_pid,largest_sid)
         
         temp2 = []
-        temp2.append(largest_sid)
-        temp2.append(offset_in_suffix[largest_sid])
-        temp2.append(counter)
+        temp2.append([largest_sid,offset_in_suffix[largest_sid], counter])
         
-        pid.append(temp2)
-    
+        wireinfo.insert(null_pid, temp2)
+        
         leftovers -= counter
         
         update = offset_in_suffix[largest_sid] + counter
         offset_in_suffix.remove(largest_pid)
         offset_in_suffix.append(update) 
-        
-
-    for d in range(len(pid)):
-        wireinfo.insert(d,pid[d])
-        
+ 
     print("The Wiring is done")
     return wireinfo

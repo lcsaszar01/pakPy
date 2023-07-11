@@ -2,10 +2,10 @@
 
 import os
 import window as win
-import time
 import graph as g
 import compact as c
-import u
+import walker as w
+
 
 def reader(k_size):
     flag=True
@@ -38,11 +38,13 @@ def reader(k_size):
                         dna = win.window(lin, k_size) #gets the overlapping kmer of a given k_size
                         graph = g.graph_maker(dna)
                         pcontig_lst, begin_kmer_lst = c.compact(graph,k_size)
+                        print('pcontig list:', pcontig_lst) 
+                        print('Begin kmer list:', begin_kmer_lst)
+                        contigs = w.walk_alg(graph,begin_kmer_lst)
+                        print('Contigs',contigs)
                         
                     else:
-                        continue
-                        
-                return dna
+                        continue  
         
         else: #catch 22 for if the file does not exist
             print("Sorry that file does not exist in the fasta_file folder. Please try again...")
