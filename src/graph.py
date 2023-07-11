@@ -115,18 +115,18 @@ def graph_maker(kmer_list):
    
     #saves a copy of the values found for analysis and debugging
     
+   
     print("sending to wire...")
+    wire_info = w.wire(u.macro_node.lmers_and_attrs)
+    u.macro_node.wire_info.extend(wire_info)
+    u.macro_node.updateNode(wire_info)
+    
+    
     curdir = os.path.dirname(__file__)
     head, tail = os.path.split(curdir)
-    fd = open(head+"/dict/dictonary"+str(c.globe_count2())+".txt", "w+")
+    fd = open(head+"/dict/dictonary.txt", "w+")
    
     fd.write(str(u.macro_node.lmers_and_attrs))
     
     fd.close()
-
-
-    wire_info = w.wire(u.macro_node.lmers_and_attrs)
-    u.macro_node.wire_info.extend(wire_info)
-    
-    
     return u.macro_node.lmers_and_attrs 

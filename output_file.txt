@@ -1,0 +1,23 @@
+Python Platform: macOS-13.4.1-arm64-arm-64bit
+Python 3.10.10 (main, Jun 15 2023, 12:39:40) [Clang 14.0.3 (clang-1403.0.22.14.1)]
+Tensor Flow Version: 2.13.0-rc1
+Keras Version: 2.13.1rc0
+Pandas 2.0.2
+Scikit-Learn 1.2.2
+SciPy 1.10.1
+GPU is NOT AVAILABLE
+
+GGTACCGGATTGACCAACAGTTGCCCAATCGAGCCACGGTCCGCCATTTCCAGCGTCTGACTGTTGAAGTAGAACGGGAAGTGCGCCCAGGAAGGCTGAC
+
+Setting up graph
+sending to wire...
+Total Number of Suffix Visits: 21194512
+Total Number of Prefix Visits: 21194512
+Working on the offset
+The Wiring is done
+starting compact
+Compact is done
+pcontig list: []
+Begin kmer list: []
+[]
+System Time: 2 min 36 sec

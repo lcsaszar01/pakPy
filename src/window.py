@@ -3,7 +3,7 @@
 '''The function in this file traverses over the FASTA DNA sequence to capture sequences. 
 starting at a kmer length of 32'''
 
-import os, time
+import os
 import counter as c
 
 def window(dna_str, kmer_size):
