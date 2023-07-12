@@ -1,31 +1,36 @@
 #!/usr/bin/env python3
 
 import pickle as pk
-import u
+import counter as cnt
+import stats as stat
+import prune as p
 
 def compact(nodes, kmer_size):
     print('starting compact')
     
-    node_threshold = 100000 #number taken from suggested value in paper.
+    node_threshold = 1000 #number taken from suggested value in paper.
     num_nodes = len(nodes)
-    
     begin_kmer_lst = []
     pcontig_lst = []
     count = 1
+
+    new_size=num_nodes
     
-    while((num_nodes > node_threshold) == True):
+    while((new_size > node_threshold) == True):
         
         I  = generate_indep_set(nodes, kmer_size)
-        count +=1
+        #print(I)
         '''
         For every node u that exists in I, pass u.pred_ext to u's successor and u.succ_ext to u's predecessor, and then delete u.
         Iterate_and_pack_node returns the lst of neightboring nodes to be modifided. 
         '''
-        
+        Update_nodees = p.list_prune(nodes, I)
+        print(Update_nodees)
+        return
         transfer_nodeInfo, pcontig_lst = iterate_and_pack(I, nodes, kmer_size)
         
         new_size = num_nodes-len(I)
-        print('length of I',len(I),'numbers of nodes', num_nodes,"new size",new_size)
+        #new_nodes_list = graph_reduce(nodes,I)
         
         '''
         Inform all nodes that are neightbors of deleted nodes in I so that they can update their extensions.
@@ -35,24 +40,26 @@ def compact(nodes, kmer_size):
         rewire_nodes_lst = serialize_and_transfer(transfer_nodeInfo, nodes)
         begin_kmer_lst.append(rewire_nodes_lst)
         
-        '''below psudocode needed for threading
-        if count > 100:
-            break{% load '''
+        cnt.loop_count()
+        
         #global_nodes = MPI_Allgatherv(nodes)
     print('Compact is done')  
-    return pcontig_lst, begin_kmer_lst #will need global_nodes for once  the MPI or MPI alterative for python
+    print(cnt.loop_total())
+    a,b,c = stat.loop_stat(cnt.loop_total())
+    print("Loop - 'while number of nodes > node_threshold", "numbers of loops:", a, "time in loop:", b, "Loops per sec:", c)
+    return pcontig_lst, begin_kmer_lst #will need global_nodes for MPI alterative in python
 
 def generate_indep_set(node_lists,kmer_size):
     I = []
-    for node in node_lists:
-        key = node[0]
-        max_kmer = key
-        if len(node)!=0:
-            i=node[1][1]
+    for node in node_lists: #For each nodes in the list of nodes passed to the function
+        key = node[0] # the key is the k-1mer of the node
+        max_kmer = key #same for max_kmer
+        if len(node)!=0: #(fail check) if the nodes is empty or 0 for some reason
+            i=node[1][1] #pulls the value of the affix
             
             if node[1][0] == 'Prefix': #For nodes are the Prefixes
                 
-                if len(i) >= kmer_size:
+                if len(i) >= kmer_size: #looks at the size of
                     pred_node = i[0:(kmer_size-1)] # I intepreted this as if the length of 'i' affix length is larger then the kmer_size then 'i' should have its extra charater chopped off to (k-1)mer size
                 else:
                     remainder = (kmer_size-1)-len(i)
@@ -70,11 +77,16 @@ def generate_indep_set(node_lists,kmer_size):
                 if len(succ_node) > len(key):
                     max_kmer = succ_node
                     break
+                
+            #appending node
             if max_kmer == key:
                 I.append(node) 
         else:
             break          
-    return I
+    return I #Returns the list
+
+
+    
     
 def iterate_and_pack(I, nodes_list, kmer_size):
     pcontig_list = []

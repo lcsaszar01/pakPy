@@ -5,6 +5,8 @@
 cnt = []
 cnt2 = []
 nameCnt = []
+count = 0
+loopCnt = []
 def globe_count():
     count = 1
     cnt.append(count)
@@ -22,3 +24,16 @@ def nameCount():
     count = 1
     nameCnt.append(count)
     return len(nameCnt)
+
+def loop_count():
+    count = 1
+    loopCnt.append(count)
+
+        
+def loop_total():
+    n = len(loopCnt)
+    return n
+    
+def clear():
+    loopCnt.clear()
+      
