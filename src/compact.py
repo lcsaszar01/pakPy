@@ -3,6 +3,7 @@
 import pickle as pk
 import counter as cnt
 import stats as stat
+<<<<<<< Updated upstream
 import prune as p
 
 def compact(nodes, kmer_size):
@@ -20,6 +21,24 @@ def compact(nodes, kmer_size):
         
         I  = generate_indep_set(nodes, kmer_size)
         #print(I)
+=======
+import u
+import fnode
+import time
+def compact(nodes, kmer_size):
+    print('starting compact')
+    
+    node_threshold = 100 #number taken from suggested value in paper.
+    num_nodes = len(nodes)
+    begin_kmer_lst = []
+    pcontig_lst = []
+
+    while((num_nodes > node_threshold) == True):
+        
+        I  = generate_indep_set(nodes, kmer_size)
+        print(len(I), num_nodes)
+        
+>>>>>>> Stashed changes
         '''
         For every node u that exists in I, pass u.pred_ext to u's successor and u.succ_ext to u's predecessor, and then delete u.
         Iterate_and_pack_node returns the lst of neightboring nodes to be modifided. 
@@ -28,10 +47,30 @@ def compact(nodes, kmer_size):
         print(Update_nodees)
         return
         transfer_nodeInfo, pcontig_lst = iterate_and_pack(I, nodes, kmer_size)
-        
+        #print("Transfer node info:",transfer_nodeInfo, "pcontig", pcontig_lst)
         new_size = num_nodes-len(I)
+<<<<<<< Updated upstream
         #new_nodes_list = graph_reduce(nodes,I)
         
+=======
+      
+        while len(nodes) != new_size:
+            #print(len(nodes))
+            for i in range(len(nodes)):
+                print(i)
+                for j in range(len(I)):
+                    sub = len(I[j])
+                    for y in range(sub):
+                        print(I[j][y])
+                        
+                        if nodes[i]==I[j][y]:
+                        
+                            nodes.pop(i) 
+                            print(len(nodes))
+                        
+                    
+
+>>>>>>> Stashed changes
         '''
         Inform all nodes that are neightbors of deleted nodes in I so that they can update their extensions.
         This was achieved in the oringal PaKman by using MPI_Alltoallv.
@@ -41,7 +80,11 @@ def compact(nodes, kmer_size):
         begin_kmer_lst.append(rewire_nodes_lst)
         
         cnt.loop_count()
+<<<<<<< Updated upstream
         
+=======
+        break
+>>>>>>> Stashed changes
         #global_nodes = MPI_Allgatherv(nodes)
     print('Compact is done')  
     print(cnt.loop_total())
@@ -51,14 +94,44 @@ def compact(nodes, kmer_size):
 
 def generate_indep_set(node_lists,kmer_size):
     I = []
+<<<<<<< Updated upstream
     for node in node_lists: #For each nodes in the list of nodes passed to the function
         key = node[0] # the key is the k-1mer of the node
         max_kmer = key #same for max_kmer
         if len(node)!=0: #(fail check) if the nodes is empty or 0 for some reason
             i=node[1][1] #pulls the value of the affix
+=======
+    pred_node = []
+    succ_node = []
+    for n in range(len(node_lists)): #For each nodes in the list of nodes passed to the function
+        key = node_lists[n][0] # the key is the k-1mer of the node
+        max_kmer = key #same for max_kmer
+        
+        for i in u.macro_node.prefixes:
+            if len(i) >= kmer_size-1:
+                pred_node = i[0:kmer_size-1]
+            else:
+                remainder=(kmer_size-1)-len(i)
+            if len(pred_node) > len(key):
+                max_kmer = pred_node
+                break
+>>>>>>> Stashed changes
             
-            if node[1][0] == 'Prefix': #For nodes are the Prefixes
+        for j in u.macro_node.suffixes:
+            if len(j) >= (kmer_size-1):
+                succ_node = j[-(kmer_size-1):0]
+            else:
+                remainder = (kmer_size-1)-len(i)
+                succ_node = key[-remainder:0]+j
+            if len(succ_node) > len(key):
+                max_kmer = succ_node
+                break
+  
+        #appending node
+        if max_kmer == key:
+            I.append(node_lists) 
                 
+<<<<<<< Updated upstream
                 if len(i) >= kmer_size: #looks at the size of
                     pred_node = i[0:(kmer_size-1)] # I intepreted this as if the length of 'i' affix length is larger then the kmer_size then 'i' should have its extra charater chopped off to (k-1)mer size
                 else:
@@ -87,78 +160,76 @@ def generate_indep_set(node_lists,kmer_size):
 
 
     
+=======
+    return I #Returns the list
+>>>>>>> Stashed changes
     
 def iterate_and_pack(I, nodes_list, kmer_size):
     pcontig_list = []
     transfer_nodeInfo = []
+   
+    for n in range(len(I)):
+        for i in range(len(u.macro_node.wire_info)-1):
+            pid = i 
+            if len(u.macro_node.prefixes[i]) > 0 and u.macro_node.prefix_terminal[i]==0:  
+                pred_node = I[n][0]
+                pred_ext = I[n][0]
+                
+            for j in range(len(u.macro_node.wire_info[pid])):
+                sid = j 
+                visit_count = u.macro_node.wire_info[i][0]
     
-    for node in range(len(I)): #Controls the traversal through each node in list I
-        if I[node][1][0] == 'Prefix': #looks at if the node is a prefix.
-            pid = I[node][1][1] #takes the letter if node is a prefix
-            if len(I[node][1][1]) > 0 and I[node][1][3]==0: #if the len of the prefix and the node is not terminal
-                pred_node = I[node-1] #find the previous node in I
-                pred_ext = I[node][0] #the extension to search with in the previous nodes.
-            for suffix in range(len(I)):
-                
-                if I[suffix][1][0] == 'Suffix' and I[suffix][0]==I[node][0]:
-                    sid = I[suffix][1][1]
-                    
-                    visit_count = I[suffix][1][4][2]
-                    
-            
-                if(I[node][1][3]==1 and I[suffix][1][3]==1): #If the prefix node and suffix node are both terminal
-                    contig = pid + I[node][0] + sid
-                    #print("CONTIG with prefix, suffix, and k-1mer:",contig)
-                    pcontig_list.append(contig) #append to contig list
-        
-            else:
-                succ_node = I[node+1] #The successor node to the current node
-                succ_ext = I[node+1][0] #the externsion to search with in prefixes
-                
-                for prefix in range(node+1,len(I)):
-                    if I[prefix][1][0]=='Prefix' and I[prefix][1][1]==pid and I[prefix][1][3]!= 0:
+                if(u.macro_node.prefix_terminal[pid]==0 and u.macro_node.suffix_terminal[sid]==0):
+                    contig = str(u.macro_node.prefixes[pid]+u.macro_node.lmers_and_attrs[n][0]+u.macro_node.suffixes[sid])
+                    pcontig_list.append(contig)
+                else:
+                    if(n < len(I)-1):
+                        succ_node = I[n+1]
+                        succ_ext = I[n][0]
+                   
+                    if u.macro_node.prefix_terminal[pid]!=0:
                         target_proc = pred_node
-                        new_ext = pred_ext + sid
-                       
-                        transfer_nodeInfo[target_proc] = tuple(pred_node, pred_ext, new_ext, visit_count)
-                    if I[suffix][1][0]=='Suffix' and I[suffix][1][1]==sid and I[suffix][1][3]!= 0:
+                        new_ext = pred_ext + u.macro_node.suffixes[sid]
+                        transfer_nodeInfo.insert(target_proc, tuple(pred_node, pred_ext, new_ext, visit_count))
+                    
+                    if u.macro_node.suffix_terminal[sid]!=0:
                         target_proc = succ_node
-                        new_ext = pid + succ_ext
-                        transfer_nodeInfo[target_proc] = [succ_node, succ_ext, new_ext, visit_count]
-        
+                        new_ext = u.macro_node.prefixes[pid]+succ_ext
+                        transfer_nodeInfo.insert(target_proc.tuple(succ_node,succ_ext,new_ext, visit_count))
+
     return transfer_nodeInfo, pcontig_list
 
 '''the function below was inspired by the serialization methods of https://www.knowledgehut.com/tutorials/python-tutorial/python-object-serialization#:~:text=Python%20%2D%20Object%20Serialization-,Object%20serialization%20is%20the%20process%20of%20converting%20state%20of%20an,object%20from%20the%20byte%20stream.'''
 
 
-def serialize_and_transfer(node_list, transfer_nodeInfo):
+def serialize_and_transfer(transfer_nodeInfo, node_list):
     serial_buffer = []
     deserial_buffer = []
-    fnode = []
     rewire_nodes_list = []
-    for x in range(len(transfer_nodeInfo)):
-        serial_buffer.append(pk.dumps(transfer_nodeInfo[x]))
+    
+    for i in range(len(transfer_nodeInfo)):
+        serial_buffer.append(pk.dumps(transfer_nodeInfo[i]))
     
     while(len(deserial_buffer) != 0):
         n = pk.loads(deserial_buffer)
+        print("NODE FROM DESERIALIZE", n)
         count = len(deserial_buffer) - 1
-        for node in range(len(node_list)):
-            if n == node_list[node]:
-                fnode.append(node[n])
-                affix = node[n][1][0] 
-                if affix == 'suffix':
-                    for idx in range(len(node)):
-                        if fnode[idx][1][1]== n[node][1]:
-                            fnode[idx][1][1]=n[node][2]
-                            fnode[idx][1][2][1]=n[node][3]
+        for j in range(len(node_list)):
+            if n == node_list[j]:
+                fnode=j[n]
+                print('FNODE',fnode)
+                if fnode[1][0]=='Suffix':
+                    for idx in range(len(u.macro_node.suffixes)):
+                        if u.macro_node.suffixes[idx] == n[idx][1]:
+                            fnode.suffixes[idx]=n[j][1]
+                            fnode.suffixes[idx]=n[j][2]
                             
-                else:
-                    for idx in range(len(node)):
-                        if fnode[idx][1][1]== n[node][1]:
-                            fnode[idx][1][1]=n[node][2]
-                            fnode[idx][1][2][1]=n[node][3]
-                            
-        if count == 100:
-            break
+                if fnode[1][0]=='Prefix':
+                    for idx in range(len(u.macro_node.suffixes)):
+                        if u.macro_node.prefix_terminal[idx]==n[idx][0]:
+                            fnode[idx]=n[j][1]
+                            fnode[idx]=n[j][2]
+                rewire_nodes_list.append(fnode)           
+        
     return rewire_nodes_list
                    
