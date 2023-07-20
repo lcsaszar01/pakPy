@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-import sys, os, time, math
-
+import os, time, math
 
 def stopwatch():
     sys_time = time.process_time()
@@ -15,3 +14,15 @@ def sysinto():
     info = os.uname()
     return print(info)
 
+def pid_info():
+    iD= os.getpid()
+    schedule = os.sched_getscheduler(iD)
+    t=time.CLOCK_PROCESS_CPUTIME_ID
+    print("Scheduler:",schedule, "pid:", iD, "Process time:", t)
+    
+def loop_stat(loops):
+    loop_tm = time.perf_counter() #in fractional seconds
+    loop_per_sec = loops/loop_tm
+    return loops,loop_tm,loop_per_sec
+    
+    

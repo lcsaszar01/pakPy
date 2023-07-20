@@ -8,7 +8,13 @@ class macro_node():
     lmers_and_attrs = []
     type = []
     affix = []
+    prefixes = []
+    suffixes = []
+    prefix_terminal = []
+    suffix_terminal = []
     counts = []
+    precount = []
+    sufcount=[]
     terminal = []
     temp = []
     temp2 = []
@@ -21,10 +27,13 @@ class macro_node():
         macro_node.counts.append(counts)
         macro_node.terminal.append(terminal)
         macro_node.temp2.append(lmer)
+        macro_node.affix_sort(type, affix, terminal)
+        
         macro_node.temp.append(macro_node.type.pop(0))
         macro_node.temp.append(macro_node.affix.pop(0))
         macro_node.temp.append(macro_node.counts.pop(0))
         macro_node.temp.append(macro_node.terminal.pop(0))
+        
         
         macro_node.temp2.append(macro_node.temp.copy())
         macro_node.temp.clear()
@@ -45,6 +54,19 @@ class macro_node():
         macro_node.terminal.clear()
         macro_node.temp2.clear()
         macro_node.lmers_and_attrs.clear()
+        
+    def affix_sort(affix, value, terminal):
+
+        if affix == "Prefix":
+            macro_node.precount.append(1)
+            macro_node.prefixes.append(value)
+            macro_node.prefix_terminal.append(terminal)
+        elif affix == "Suffix":
+            macro_node.suffixes.append(value)
+            macro_node.suffix_terminal.append(terminal)
+            macro_node.sufcount.append(1)
+            
+        return len(macro_node.sufcount), len(macro_node.precount)
         
         
     

@@ -18,5 +18,5 @@ echo Accesssing $program_name
 echo $time_stamp
 chmod 777 ./src/main.py
 echo  
-./src/main.py > output_file.txt 2>&1
+./src/main.py  > output_file.txt 2>&1
 echo DONE
