@@ -3,88 +3,45 @@
 import pickle as pk
 import counter as cnt
 import stats as stat
-<<<<<<< Updated upstream
-import prune as p
-
-def compact(nodes, kmer_size):
-    print('starting compact')
-    
-    node_threshold = 1000 #number taken from suggested value in paper.
-    num_nodes = len(nodes)
-    begin_kmer_lst = []
-    pcontig_lst = []
-    count = 1
-
-    new_size=num_nodes
-    
-    while((new_size > node_threshold) == True):
-        
-        I  = generate_indep_set(nodes, kmer_size)
-        #print(I)
-=======
 import u
 import fnode
 import time
+import os 
 def compact(nodes, kmer_size):
     print('starting compact')
     
     node_threshold = 100 #number taken from suggested value in paper.
-    num_nodes = len(nodes)
     begin_kmer_lst = []
     pcontig_lst = []
 
-    while((num_nodes > node_threshold) == True):
+    while((len(nodes) > node_threshold) == True):
         
         I  = generate_indep_set(nodes, kmer_size)
-        print(len(I), num_nodes)
         
->>>>>>> Stashed changes
         '''
         For every node u that exists in I, pass u.pred_ext to u's successor and u.succ_ext to u's predecessor, and then delete u.
         Iterate_and_pack_node returns the lst of neightboring nodes to be modifided. 
         '''
-        Update_nodees = p.list_prune(nodes, I)
-        print(Update_nodees)
-        return
+        
+        
         transfer_nodeInfo, pcontig_lst = iterate_and_pack(I, nodes, kmer_size)
         #print("Transfer node info:",transfer_nodeInfo, "pcontig", pcontig_lst)
-        new_size = num_nodes-len(I)
-<<<<<<< Updated upstream
-        #new_nodes_list = graph_reduce(nodes,I)
+        new_size = len(nodes)-len(I)
         
-=======
-      
-        while len(nodes) != new_size:
-            #print(len(nodes))
-            for i in range(len(nodes)):
-                print(i)
-                for j in range(len(I)):
-                    sub = len(I[j])
-                    for y in range(sub):
-                        print(I[j][y])
-                        
-                        if nodes[i]==I[j][y]:
-                        
-                            nodes.pop(i) 
-                            print(len(nodes))
-                        
-                    
-
->>>>>>> Stashed changes
-        '''
-        Inform all nodes that are neightbors of deleted nodes in I so that they can update their extensions.
+        '''Resize graph to new_size after deleting all macro_nodes ithat exitst in I
         This was achieved in the oringal PaKman by using MPI_Alltoallv.
-        Alternative:
-        '''
+        Alternative:'''
+        while len(nodes) != new_size+1:
+            for i in range(len(nodes)):
+                for o in range(len(I)):
+                    for k in range(len(I[o])-1):
+                        if nodes[i]==I[o][k]:
+                            nodes.pop(i) 
+ 
         rewire_nodes_lst = serialize_and_transfer(transfer_nodeInfo, nodes)
         begin_kmer_lst.append(rewire_nodes_lst)
         
         cnt.loop_count()
-<<<<<<< Updated upstream
-        
-=======
-        break
->>>>>>> Stashed changes
         #global_nodes = MPI_Allgatherv(nodes)
     print('Compact is done')  
     print(cnt.loop_total())
@@ -94,13 +51,6 @@ def compact(nodes, kmer_size):
 
 def generate_indep_set(node_lists,kmer_size):
     I = []
-<<<<<<< Updated upstream
-    for node in node_lists: #For each nodes in the list of nodes passed to the function
-        key = node[0] # the key is the k-1mer of the node
-        max_kmer = key #same for max_kmer
-        if len(node)!=0: #(fail check) if the nodes is empty or 0 for some reason
-            i=node[1][1] #pulls the value of the affix
-=======
     pred_node = []
     succ_node = []
     for n in range(len(node_lists)): #For each nodes in the list of nodes passed to the function
@@ -115,7 +65,6 @@ def generate_indep_set(node_lists,kmer_size):
             if len(pred_node) > len(key):
                 max_kmer = pred_node
                 break
->>>>>>> Stashed changes
             
         for j in u.macro_node.suffixes:
             if len(j) >= (kmer_size-1):
@@ -131,38 +80,7 @@ def generate_indep_set(node_lists,kmer_size):
         if max_kmer == key:
             I.append(node_lists) 
                 
-<<<<<<< Updated upstream
-                if len(i) >= kmer_size: #looks at the size of
-                    pred_node = i[0:(kmer_size-1)] # I intepreted this as if the length of 'i' affix length is larger then the kmer_size then 'i' should have its extra charater chopped off to (k-1)mer size
-                else:
-                    remainder = (kmer_size-1)-len(i)
-                    pred_node = i+key[0:remainder]
-                if len(pred_node) > len(key):
-                    max_kmer=pred_node
-                    break
-            else:  #If the node is a Suffix
-                
-                if len(str(i)) >= (kmer_size-1):
-                    succ_node = i[-(kmer_size-1):]
-                else:
-                    remainder = (kmer_size-1)-len(i)
-                    succ_node = key[-remainder:]+i
-                if len(succ_node) > len(key):
-                    max_kmer = succ_node
-                    break
-                
-            #appending node
-            if max_kmer == key:
-                I.append(node) 
-        else:
-            break          
     return I #Returns the list
-
-
-    
-=======
-    return I #Returns the list
->>>>>>> Stashed changes
     
 def iterate_and_pack(I, nodes_list, kmer_size):
     pcontig_list = []

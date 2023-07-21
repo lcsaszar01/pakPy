@@ -7,9 +7,7 @@ import os
 import math as m
 import wire as w 
 import u as u
-import draw_graph as dg
-import time
-import counter as c
+
 
 def graph_maker(kmer_list):
     print("Setting up graph")
@@ -17,8 +15,7 @@ def graph_maker(kmer_list):
     dict_str = () #takes a string from a dictonary value
 
     #A bunch of value initializations.
-    myVars = locals()
-    name = []
+  
     lst = []
     visit_count = 0
     visit_count2= 0    
@@ -62,53 +59,53 @@ def graph_maker(kmer_list):
         
         #FIND EDGES FOR PREFIX
         
-        for d in range(len(kmer_dict)-1): # traverse the dictionary for repeading that many times.
-            for a in alpha: #for the letter from our prefix alphabet
-                #print("Counter:", counter_for_find)
-                #time.sleep(0.5)
-                temp_lmer = a+lmerB #creates the kmer-1 of the prefix letter
-                
-                #see if the string has a match in the dict
-                for x in range(len(kmer_dict)):
-                    if(kmer_list[x] == temp_lmer):
-                        counter_for_find += 1
-                    #print(kmer_list[x], temp_lmer, counter_for_find)
-                    #time.sleep(1)
-                     
-                #print(counter_for_find)    
-                if(counter_for_find > 0): 
-                    #print("match found")
-                    visit_count = m.ceil(counter_for_find/coverage)#Gives us the number of vertices that the string should have
-                    lst.append(counter_for_find) 
-                    lst.append(visit_count)
-                    u.macro_node.createNodes(lmerB, 'Prefix', a, lst.copy(), 0)   
-                        
-                lst.clear()                 
-                counter_for_find = 0
+        
+        for a in alpha: #for the letter from our prefix alphabet
+            #print("Counter:", counter_for_find)
+            #time.sleep(0.5)
+            temp_lmer = a+lmerB #creates the kmer-1 of the prefix letter
+            
+            #see if the string has a match in the dict
+            for x in range(len(kmer_dict)):
+                if(kmer_list[x] == temp_lmer):
+                    counter_for_find += 1
+                #print(kmer_list[x], temp_lmer, counter_for_find)
+                #time.sleep(1)
+                    
+            #print(counter_for_find)    
+            if(counter_for_find > 0): 
+                #print("match found")
+                visit_count = m.ceil(counter_for_find/coverage)#Gives us the number of vertices that the string should have
+                lst.append(counter_for_find) 
+                lst.append(visit_count)
+                u.macro_node.createNodes(lmerB, 'Prefix', a, lst.copy(), 0)   
+                    
+            lst.clear()                 
+            counter_for_find = 0
             
                    
         lmerB=''
         
         
-        for d2 in range(len(kmer_dict)-1): #FIND EDGES FOR SUFFIX
-            for a2 in alpha:
-                #print("Counter:", counter_for_find2)
-                temp_lmer = lmerA+a2
-                #see if the string exits in the dict
-                for x in range(len(kmer_dict)):
-                    if(kmer_list[x] == temp_lmer):
-                        counter_for_find2 += 1
-                
-                if(counter_for_find2 > 0): 
-                    visit_count2 = m.ceil(counter_for_find2/coverage) #Gives us the number of vertices that the string should have  
-                    lst.append(counter_for_find2)
-                    lst.append(visit_count2)
-                       
+        
+        for a2 in alpha:
+            #print("Counter:", counter_for_find2)
+            temp_lmer = lmerA+a2
+            #see if the string exits in the dict
+            for x in range(len(kmer_dict)):
+                if(kmer_list[x] == temp_lmer):
+                    counter_for_find2 += 1
+            
+            if(counter_for_find2 > 0): 
+                visit_count2 = m.ceil(counter_for_find2/coverage) #Gives us the number of vertices that the string should have  
+                lst.append(counter_for_find2)
+                lst.append(visit_count2)
                     
-                    u.macro_node.createNodes(lmerA, 'Suffix', a, lst.copy(), 0)
                 
-                lst.clear()
-                counter_for_find2 = 0 #clears the count for the next letter 
+                u.macro_node.createNodes(lmerA, 'Suffix', a, lst.copy(), 0)
+            
+            lst.clear()
+            counter_for_find2 = 0 #clears the count for the next letter 
                 
         lmerA=''  #clears the lmer string
         
