@@ -25,6 +25,7 @@ def wire(cnt_lst):
     temp = []
     
     #parses the list to get the visit count values, splits by affix value
+    
     for item in cnt_lst:
         subitem = item[1]
         if subitem[0] =='Prefix':
@@ -61,6 +62,7 @@ def wire(cnt_lst):
             temp.append(sc-pc)
             pre_dict.append(temp.copy())
             temp.clear()
+    
     leftovers = sc+suffix_node[null_sid]
    
     #Initialie an array to maintain the offsets within each suffix edge

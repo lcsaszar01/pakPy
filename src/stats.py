@@ -16,13 +16,15 @@ def sysinto():
 
 def pid_info():
     iD= os.getpid()
-    schedule = os.sched_getscheduler(iD)
+    who = os.getuid
+    schedule = os.getpriority(os.PRIO_PROCESS, iD)
     t=time.CLOCK_PROCESS_CPUTIME_ID
-    print("Scheduler:",schedule, "pid:", iD, "Process time:", t)
+    print("\nScheduler:",schedule, "pid:", iD, "Process time:", t)
     
-def loop_stat(loops):
+def loop_stat(loops, loop_name):
     loop_tm = time.perf_counter() #in fractional seconds
     loop_per_sec = loops/loop_tm
-    return loops,loop_tm,loop_per_sec
+    print("Loop - ", loop_name, " - numbers of loops:", loops, ", time in loop:", "%0.1f" % float(loop_tm),'sec', ", Loops per sec:", "%.08f" % float(loop_per_sec))
+
     
     

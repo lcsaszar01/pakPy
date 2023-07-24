@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import reads as r
 import fasta as f
-import graph as g
-import stats as t
-import compact as pact
+import compact as c
+import walker as w
+import stats as s
+
 import gpu_check as check
 
 ans = ''
@@ -24,8 +25,11 @@ while(flag!=False):
         #ans2 = input("What kmer size do you want? (Must be between 32-48 char) > ")
         ans2 = 32
         if(int(ans2)<=48 and int(ans2)>=32):
-            dna = r.reader(int(ans2)) 
-            t.stopwatch()
+            graph, k_size = r.reader(int(ans2))
+            global_graph, pcontig_lst, begin_kmer_lst = c.compact(graph,k_size)
+            contigs = w.walk_alg(global_graph, pcontig_lst, begin_kmer_lst)
+            print('Output Contigs:',contigs)
+            s.stopwatch()
             flag=False
         break
     elif(ans=="Quit" or ans=="q" or ans=="exit"):

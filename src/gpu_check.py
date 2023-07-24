@@ -11,7 +11,11 @@ import sklearn as sk
 import scipy as sp
 import tensorflow as tf
 import platform
+import stats
+
 def precheck():
+    stats.sysinto()
+    print('\n')
     print(f"Python Platform: {platform.platform()}")
     print(f"Python {sys.version}")
     print(f"Tensor Flow Version: {tf.__version__}")
@@ -21,3 +25,7 @@ def precheck():
     print(f"SciPy {sp.__version__}")
     gpu = len(tf.config.list_physical_devices('GPU'))>0
     print("GPU is", "available" if gpu else "NOT AVAILABLE\n")
+    
+    
+    
+    
