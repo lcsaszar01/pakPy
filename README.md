@@ -11,17 +11,20 @@ The following Python libraries must be installed for the code to run.
 
 Library | Install
 --------|---------
-networkx| pip install networkx 
-numpy   | pip install numpy
-keras   | pip install keras
-pandas  | pip install pandas
-scikit-learn | pip install scikit-learn
-scipy | pip install scipy
-tensorflow | pip install tensorflow
-matplotlib | pip install matplotlib
+networkx| ```pip install networkx```
+numpy   | ```pip install numpy```
+keras   | ```pip install keras```
+pandas  | ```pip install pandas```
+scikit-learn | ```pip install scikit-learn```
+scipy | ```pip install scipy```
+tensorflow | ```pip install tensorflow```
+matplotlib | ```pip install matplotlib```
 
 ### Running code
-Enter the main directory and run the ./run.sh file in your terminal
+Enter in the command line
+```
+./run.sh
+```
 
 ### Verified Platforms
 ***The following code has be tested on these platforms*** 
