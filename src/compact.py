@@ -29,6 +29,7 @@ def compact(nodes, kmer_size):
         transfer_nodeInfo, pcontig_lst = iterate_and_pack(I, nodes, kmer_size)
         #print("Transfer node info:",transfer_nodeInfo, "pcontig", pcontig_lst)
         new_size = len(nodes)-len(I)
+
         
         '''Resize graph to new_size after deleting all macro_nodes ithat exitst in I
         This was achieved in the oringal PaKman by using MPI_Alltoallv.
