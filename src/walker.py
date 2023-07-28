@@ -16,16 +16,19 @@ def walk_alg(global_graph, pcontig_list, begin_kmer_list):
                 mn.append(begin_kmer_list[b])
        
     for k in range(len(mn)):
+        print('Node MN:',mn[k])
         count += 1
-        exten = mn[k][1][3]
-        if exten == 0: #if the node is terminal
-            prefix_id = mn[k][1][1]
-            freq = mn[k][1][4][2]
-            
-            contigs.append(prefix_id)
-            contigs.append(mn[k][0])
-            
-            walk(contigs,freq,0,mn,prefix_id)
+        if len(mn[k])==0:
+          pass
+        else:  
+            if mn[k][1][3] == 0: #if the node is terminal
+                prefix_id = mn[k][1][1]
+                freq = mn[k][1][4][2]
+                
+                contigs.append(prefix_id)
+                contigs.append(mn[k][0])
+                
+                walk(contigs,freq,0,mn,prefix_id)
     
     stats.loop_stat(count, "walk_alg")    
         
