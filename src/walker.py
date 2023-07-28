@@ -16,7 +16,7 @@ def walk_alg(global_graph, pcontig_list, begin_kmer_list):
                 mn.append(begin_kmer_list[b])
        
     for k in range(len(mn)):
-        print('Node MN:',mn[k])
+        
         count += 1
         if len(mn[k])==0:
           pass
