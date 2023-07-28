@@ -14,7 +14,7 @@ def compact(nodes, kmer_size):
     begin_kmer_lst = []
     pcontig_lst = []
     global_graph = []
-    print(len(nodes))
+    
     
     while((len(nodes) > node_threshold) == True):
         
@@ -33,18 +33,14 @@ def compact(nodes, kmer_size):
         '''Resize graph to new_size after deleting all macro_nodes ithat exitst in I
         This was achieved in the oringal PaKman by using MPI_Alltoallv.
         Alternative:'''
-        while len(nodes) != new_size+1:
-            for i in range(len(nodes)):
-                for o in range(len(I)):
-                    print(len(I[o][1]))
-                    print(len(I[o][2]))
+        while len(nodes) != new_size:
+        
+            for o in range(len(I)):
+                for s in range(1):
+                    for n in nodes:
+                        if n==I[o][s]:
+                            nodes.pop()
                     
-                    for k in range(len(I[o])-1):
-                        
-                        if nodes[i]==I[o][k]:
-                            
-                            nodes.pop(i) 
- 
         rewire_nodes_lst = serialize_and_transfer(transfer_nodeInfo, nodes)
         begin_kmer_lst.append(rewire_nodes_lst)
         

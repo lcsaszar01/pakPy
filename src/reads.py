@@ -37,7 +37,7 @@ def reader(k_size):
                     if(lin.startswith('>')==False): #passes over info header lines
                         s.pid_info()
                         count +=1
-                        print("Read line",count,':\n',lin) 
+                        print("Read line",count,': ',lin) 
                         dna = win.window(lin, k_size) #gets the overlapping kmer of a given k_size
                         graph = g.graph_maker(dna)
                         global_graph.extend(graph)

@@ -77,10 +77,9 @@ def graph_maker(kmer_list):
                     kmers = len(kmer_dict)
                     if x == kmers or x==0:
                         term = 1
-                    
-            #print('COUNTER FOR FIND', counter_for_find)   
+ 
             if(counter_for_find > 0): 
-                #print("match found")
+         
                 visit_count = m.ceil(counter_for_find/coverage)#Gives us the number of vertices that the string should have
                 lst.append(counter_for_find) 
                 lst.append(visit_count)
@@ -93,7 +92,7 @@ def graph_maker(kmer_list):
             lst.clear()                 
             counter_for_find = 0
             
-        #stats.loop_stat(count, "prefixes")           
+        
         lmerB=''
         
         
@@ -123,13 +122,14 @@ def graph_maker(kmer_list):
                     u.macro_node.createNodes(lmerA, 'Suffix', a2, lst.copy(), 0)
             lst.clear()
             counter_for_find2 = 0 #clears the count for the next letter 
-        #stats.loop_stat(count, "suffixes")            
+              
         lmerA=''  #clears the lmer string
-    stats.loop_stat(counts, "graph values break down")    
-   
+    lname, tm, lps = stats.loop_stat(counts, "graph values break down")    
+    t, l =stats.data_append(tm, lps)
+    stats.data_chart(t,l,lname)
     #saves a copy of the values found for analysis and debugging
     
-   
+    
     print("sending to wire...")
     wire_info = w.wire(u.macro_node.lmers_and_attrs)
     u.macro_node.wire_info.extend(wire_info)
@@ -143,4 +143,5 @@ def graph_maker(kmer_list):
     fd.write(str(u.macro_node.lmers_and_attrs))
     
     fd.close()
+    
     return u.macro_node.lmers_and_attrs 
