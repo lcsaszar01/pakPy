@@ -7,6 +7,8 @@ import os
 import math as m
 import wire as w 
 import u as u
+import time
+import stats
 
 
 def graph_maker(kmer_list):
@@ -30,10 +32,14 @@ def graph_maker(kmer_list):
     lmer2 = []
     count = 0
     alpha = ('A','T','C','G') #The Alphabet of Amino Acid polymers
+    counts=0
     
     for i in range(len(kmer_dict)):
+        counts +=1
+       
         kmer_str = kmer_dict[i]
         flag=True
+        
         while(flag!=False):  #splits the kmer into a kmer-1, creating the string for if the suffix and if the prefix was removed.  
             count +=1
             if(count == 1):
@@ -57,62 +63,73 @@ def graph_maker(kmer_list):
         lmer1.clear()
         lmer2.clear()
         
-        #FIND EDGES FOR PREFIX
-        
-        
+        #LOOKS AT PREFIXES
         for a in alpha: #for the letter from our prefix alphabet
-            #print("Counter:", counter_for_find)
-            #time.sleep(0.5)
+            count += 1
+            
             temp_lmer = a+lmerB #creates the kmer-1 of the prefix letter
             
             #see if the string has a match in the dict
             for x in range(len(kmer_dict)):
                 if(kmer_list[x] == temp_lmer):
                     counter_for_find += 1
-                #print(kmer_list[x], temp_lmer, counter_for_find)
-                #time.sleep(1)
-                    
-            #print(counter_for_find)    
+
+                    kmers = len(kmer_dict)
+                    if x == kmers or x==0:
+                        term = 1
+ 
             if(counter_for_find > 0): 
-                #print("match found")
+         
                 visit_count = m.ceil(counter_for_find/coverage)#Gives us the number of vertices that the string should have
                 lst.append(counter_for_find) 
                 lst.append(visit_count)
-                u.macro_node.createNodes(lmerB, 'Prefix', a, lst.copy(), 0)   
+                
+                if term==1:
+                    u.macro_node.createNodes(lmerB, 'Prefix', a, lst.copy(), 1)
+                else:
+                    u.macro_node.createNodes(lmerB, 'Prefix', a, lst.copy(), 0) 
                     
             lst.clear()                 
             counter_for_find = 0
             
-                   
+        
         lmerB=''
         
         
+        #LOOKS AT SUFFIXES
         
         for a2 in alpha:
-            #print("Counter:", counter_for_find2)
+            count+=1
+            
             temp_lmer = lmerA+a2
             #see if the string exits in the dict
             for x in range(len(kmer_dict)):
                 if(kmer_list[x] == temp_lmer):
                     counter_for_find2 += 1
+                    
+                    kmers = len(kmer_dict)
+                    if x == kmers or x==0:
+                        term = 1
             
             if(counter_for_find2 > 0): 
                 visit_count2 = m.ceil(counter_for_find2/coverage) #Gives us the number of vertices that the string should have  
                 lst.append(counter_for_find2)
                 lst.append(visit_count2)
                     
-                
-                u.macro_node.createNodes(lmerA, 'Suffix', a, lst.copy(), 0)
-            
+                if term == 1:
+                    u.macro_node.createNodes(lmerA, 'Suffix', a2, lst.copy(), 1)
+                else:
+                    u.macro_node.createNodes(lmerA, 'Suffix', a2, lst.copy(), 0)
             lst.clear()
             counter_for_find2 = 0 #clears the count for the next letter 
-                
+              
         lmerA=''  #clears the lmer string
-        
-   
+    lname, tm, lps = stats.loop_stat(counts, "graph values break down")    
+    t, l =stats.data_append(tm, lps)
+    stats.data_chart(t,l,lname)
     #saves a copy of the values found for analysis and debugging
     
-   
+    
     print("sending to wire...")
     wire_info = w.wire(u.macro_node.lmers_and_attrs)
     u.macro_node.wire_info.extend(wire_info)
@@ -126,4 +143,5 @@ def graph_maker(kmer_list):
     fd.write(str(u.macro_node.lmers_and_attrs))
     
     fd.close()
+    
     return u.macro_node.lmers_and_attrs 
