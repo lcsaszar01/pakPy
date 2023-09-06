@@ -31,6 +31,7 @@ def reader(k_size):
                 
                 lines = fd.readlines()
                 numb = pow(2,10)
+                dna = []
                 for lin in lines[0:numb]: #gets rid of the info line of the file
                     
                     #number limitation is a temp fix for not allowing it to run all the data and fill up the HD
@@ -38,12 +39,13 @@ def reader(k_size):
                         s.pid_info()
                         count +=1
                         print("Read line",count,': ',lin) 
-                        dna = win.window(lin, k_size) #gets the overlapping kmer of a given k_size
-                        graph = g.graph_maker(dna)
-                        global_graph.extend(graph)
+                        dna.append(win.window(lin, k_size)) #gets the overlapping kmer of a given k_size
                         
-                    else:
-                        continue  
+                graph = g.graph_maker(dna)
+                global_graph.extend(graph)
+                        
+                    #else:
+                    #    continue  
                 return global_graph, k_size
         
         else: #catch 22 for if the file does not exist
