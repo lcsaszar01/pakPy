@@ -8,7 +8,7 @@ import math as m
 import wire as w 
 import u as u
 import time
-import stats
+import datetime
 
 
 def graph_maker(kmer_list):
@@ -138,6 +138,7 @@ def graph_maker(kmer_list):
     
     curdir = os.path.dirname(__file__)
     head, tail = os.path.split(curdir)
+\
     fd = open(head+"/dict/dictonary.txt", "w+")
    
     fd.write(str(u.macro_node.lmers_and_attrs))
