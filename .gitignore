@@ -63,3 +63,6 @@ docs/_build/
 
 # PyBuilder
 target/
+
+#data source files
+fasta_files/ecoli.fasta
