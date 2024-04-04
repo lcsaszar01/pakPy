@@ -66,4 +66,3 @@ target/
 
 #data source files
 fasta_files/ecoli.fasta
-tests/kmer_lst.txt
