@@ -26,6 +26,16 @@ Enter in the command line
 ./run.sh
 ```
 
+### To compile code into ASM use GCC
+```gcc -c file.S -o file.o
+```
+```gcc file.o -o file
+```
+```gcc -S file.c -o file.s
+```
+```gcc -c file.s
+```
+
 ### Verified Platforms
 ***The following code has be tested on these platforms*** 
 MacOS | Debuain/Ubuntu | GNU/Linux
