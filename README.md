@@ -27,13 +27,17 @@ Enter in the command line
 ```
 
 ### To compile code into ASM use GCC
-```gcc -c file.S -o file.o
 ```
-```gcc file.o -o file
+gcc -c file.S -o file.o
 ```
-```gcc -S file.c -o file.s
 ```
-```gcc -c file.s
+gcc file.o -o file
+```
+```
+gcc -S file.c -o file.s
+```
+```
+gcc -c file.s
 ```
 
 ### Verified Platforms
