@@ -5,9 +5,15 @@
 #include <string.h>
 #include <math.h>
 #include <float.h>
+#include <sys/sysinfo.h>
 
+int sysinfo(struct sysinfo *info);
+
+struct_
 int main(int argc, char *argv[]){
+
     printf("setting up graph\n");
+    printf("Mem unit sz in bytes = %llu", info.mem_unit);
     double coverage = 0.000215;
 
     /// Opens the kmer_lst file
@@ -48,10 +54,15 @@ int main(int argc, char *argv[]){
     // LOOKS AT THE PREFIXES THAT CAN OCCURE
     for (int i = 0; i <= 4; i++)
     {
+        
         count++;
         printf("%s\n", alpha[i]);
         strcat(temp_lmer, &alpha[i]);
         printf("%s\n",temp_lmer);
+        printf("stats: \t Availabel mem sz = %llu,
+                    \n\t\t total swap sz = %llu,
+                    \n\t\t Available high mem sz = %llu",
+                    info.freeram, info.totalswap, info.freehigh);
         break;
         //strcat(temp_lmer, kmer_1);
         //printf("%s\n", temp_lmer);
@@ -118,4 +129,3 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
-//THIS IS A TEST COMMENT

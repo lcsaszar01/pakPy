@@ -3,6 +3,9 @@
 import os, time, math
 import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sb
+import numpy as np
+sb.set_theme()
 
 def stopwatch():
     sys_time = time.process_time()
@@ -26,20 +29,35 @@ def pid_info():
 def loop_stat(loops, loop_name):
     loop_tm = time.perf_counter() #in fractional seconds
     loop_per_sec = loops/loop_tm
-    print("Loop - ", loop_name, " - numbers of loops:", loops, ", time in loop:", "%0.1f" % float(loop_tm),'sec', ", Loops per sec:", "%.08f" % float(loop_per_sec))
+    print("Loop - ", loop_name, " - numbers of loops:", loops, ", time in loop:", "%0.1f" % float(loop_tm),'sec', ", loops per sec:", "%.08f" % float(loop_per_sec))
     return loop_name, loop_tm, loops
 
-def data_chart(xs,ys,name): 
+def data_chart(kmer_strNum,xs,ys,sloops,name): 
      d = dict()
-     d.update({'time': xs})
-     d.update({'number of loops': ys})
+     d.name(name)
+     d.keys(kmer_strNum)
+     d.values({'time in loop': xs},{'number of loops': ys},{'loops per sec': sloops})
+
      df = pd.DataFrame(d)
-     df.plot(kind='line',x='time',y='number of loops',color='blue')
-     n = 'Line Graph of time vs. loops'+''+name
-     plt.title(n)
+     print('\n',df.to_markdown,'\n')
+     
+     
+
+     
+     sb.catplot(
+     data=df, x="time", y="number of loops", hue="weight",
+     native_scale=True, zorder=1
+     )
+     sb.regplot(
+     data=df, x="time", y="number of loops",
+     scatter=False, truncate=False, order=2, color=".2",
+     )
+
+     
+     #File name & save path
      curdir = os.path.dirname(__file__)
      head, tail = os.path.split(curdir)
-     plt.savefig(head+'/figures/fig1.png')
+     plt.savefig(head+'/figures/figSEABORN.png')
      
      
      

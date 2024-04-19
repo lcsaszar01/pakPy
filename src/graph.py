@@ -7,8 +7,7 @@ import os
 import math as m
 import wire as w 
 import u as u
-import time
-import datetime
+import stats as stats
 
 
 def graph_maker(kmer_list):
@@ -17,7 +16,7 @@ def graph_maker(kmer_list):
     dict_str = () #takes a string from a dictonary value
 
     #A bunch of value initializations.
-  
+    num = 1
     lst = []
     visit_count = 0
     visit_count2= 0    
@@ -126,7 +125,8 @@ def graph_maker(kmer_list):
         lmerA=''  #clears the lmer string
     lname, tm, lps = stats.loop_stat(counts, "graph values break down")    
     t, l =stats.data_append(tm, lps)
-    stats.data_chart(t,l,lname)
+    num = num+1
+    stats.data_chart(t,l,lname,t/l,"loop"+num.string())
     #saves a copy of the values found for analysis and debugging
     
     
@@ -138,7 +138,7 @@ def graph_maker(kmer_list):
     
     curdir = os.path.dirname(__file__)
     head, tail = os.path.split(curdir)
-\
+
     fd = open(head+"/dict/dictonary.txt", "w+")
    
     fd.write(str(u.macro_node.lmers_and_attrs))
