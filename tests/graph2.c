@@ -109,15 +109,3 @@ void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[]
         printf("Maximum number of nodes reached.\n");
     }
 }
-
-void loop_stat(int counts, char *message) {
-    // Implementation of loop_stat function
-}
-
-void data_chart(int tm[], int l[], char *lname[], double ratio[], char *label) {
-    // Implementation of data_chart function
-}
-
-void data_append(int tm[], int lps[]) {
-    // Implementation of data_append function
-}

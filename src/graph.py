@@ -10,6 +10,8 @@ import u as u
 import stats as stats
 
 
+
+
 def graph_maker(kmer_list):
     print("Setting up graph")
     coverage = 0.000215 #There is 928,320 DNA fragments in the ecoli.fasta file. The percent value of 1 string is the coverage value
