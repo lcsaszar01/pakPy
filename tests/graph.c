@@ -5,7 +5,7 @@
 #include <string.h>
 #include <math.h>
 #include <float.h>
-#include <sys/sysinfo.h>
+#include <sys/
 
 int sysinfo(struct sysinfo *info);
 
@@ -31,6 +31,8 @@ void loop_stat(int counts, char *message);
 void data_chart(int tm[], int l[], char *lname[], double ratio[], char *label);
 void data_append(int tm[], int lps[]);
 
+void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[], int term);
+
 void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[], int term)
 {
     if (graph->numNodes < MAX_DICT_SIZE)
@@ -54,18 +56,18 @@ void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[]
 int main(int argc, char *argv[]){
 
     printf("setting up graph\n");
-    printf("Mem unit sz in bytes = %llu", info.mem_unit);
+    printf("Mem unit sz in bytes = %i", info->mem_unit);
 
 
     /// Opens the kmer_lst file
     FILE *fd1;
     fd1 = fopen("kmer_lst.txt", "r");
-    char kmer_list[BUFSIZ];
+    char kmer_list[MAX_DICT_SIZE][MAX_KMER_LEN]; // Assuming a maximum dictionary size and kmer length
 
     fgets(kmer_list, BUFSIZ, fd1);
     // printf("%s",kmer_list);
     fclose(fd1);
-    printf("%s\n", kmer_list);
+    printf("%c\n", kmer_list);
 
     // Opens the kmer-1 file
     FILE *fd2;
@@ -78,7 +80,6 @@ int main(int argc, char *argv[]){
     
     double lst[BUFSIZ][2];
 
-    char kmer_list[MAX_DICT_SIZE][MAX_KMER_LEN]; // Assuming a maximum dictionary size and kmer length
     int numKmers = 0; // Number of kmers in the list
 
     int counter_for_find = 0;
@@ -106,13 +107,10 @@ int main(int argc, char *argv[]){
         count++;
         char lmer1[MAX_KMER_LEN] = "";
         char lmer2[MAX_KMER_LEN] = "";
-        printf("%s\n", alpha[i]);
+        printf("%c\n", alpha[i]);
         strcat(temp_lmer, &alpha[i]);
         printf("%s\n",temp_lmer);
-        printf("stats: \t Availabel mem sz = %llu,
-                    \n\t\t total swap sz = %llu,
-                    \n\t\t Available high mem sz = %llu",
-                    info.freeram, info.totalswap, info.freehigh);
+        printf("stats: \t Availabel mem sz = %llu, \n total swap sz = %llu, \n Available high mem sz = %llu", info->freeram, info->totalswap, info->freehigh);
         break;
         //strcat(temp_lmer, kmer_1);
         //printf("%s\n", temp_lmer);
@@ -132,7 +130,7 @@ int main(int argc, char *argv[]){
 
         if (counter_for_find > 0)
         {
-            double visit_count = counter_for_find / coverage;
+            double visit_count = counter_for_find / COVERAGE;
             lst[count][1] = counter_for_find;
             lst[count][0] = visit_count;
         }
@@ -166,19 +164,21 @@ int main(int argc, char *argv[]){
 
         if (counter_for_find > 0)
         {
-            double visit_count = counter_for_find / coverage;
+            double visit_count = counter_for_find / COVERAGE;
             lst[count][1] = counter_for_find;
             lst[count][0] = visit_count;
         }
-    */
     }
+    */
 
     // Perform stats and data operations
-    int tm[MAX_DICT_SIZE], lps[MAX_DICT_SIZE];
+    int tm[MAX_DICT_SIZE],
+    lps[MAX_DICT_SIZE];
     char *lname[MAX_DICT_SIZE];
     loop_stat(numKmers, "graph values break down");
     data_append(tm, lps);
 
     return 0;
 }
+
 
