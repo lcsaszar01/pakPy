@@ -1,5 +1,5 @@
 //graph.c
-//authpr @lcsaszar01
+//author @lcsaszar01
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -119,7 +119,7 @@ int main(int argc, char *argv[]){
         for (int a = 0; a < ALPHA_SIZE; a++)
         {
             char temp_lmer[MAX_KMER_LEN];
-            sprintf(temp_lmer, "%s%c", lmer1, alpha[a]);
+            printf(temp_lmer, "%s");
 
             // Check if temp_lmer exists in kmer_list
 
@@ -146,8 +146,6 @@ int main(int argc, char *argv[]){
         strcat(temp_lmer, &alpha[i]);
 
         // See if the string has a match is the strings
-        for (int x = 0; x <= (int)strlen(kmer_list); x++)
-        {
 
             if (kmer_list[x] == (char)*temp_lmer)
             {
@@ -176,8 +174,8 @@ int main(int argc, char *argv[]){
     int tm[MAX_DICT_SIZE],
     lps[MAX_DICT_SIZE];
     char *lname[MAX_DICT_SIZE];
-    loop_stat(numKmers, "graph values break down");
-    data_append(tm, lps);
+    //loop_stat(numKmers, "graph values break down");
+    //data_append(tm, lps);
 
     return 0;
 }
