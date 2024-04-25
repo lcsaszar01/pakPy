@@ -5,9 +5,9 @@
 #include <string.h>
 #include <math.h>
 #include <float.h>
-#include <sys/
+//#include <sys/
 
-int sysinfo(struct sysinfo *info);
+//int sysinfo(struct sysinfo *info);
 
 // Define constants
 #define ALPHA_SIZE 4
@@ -24,6 +24,13 @@ typedef struct {
     int counts[2];
     int term;
 } KmerNode;
+
+// Define structure for graph nodes
+typedef struct
+{
+    KmerNode nodes[MAX_DICT_SIZE];
+    int numNodes;
+} Graph;
 
 // Function prototypes
 void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[], int term);
@@ -56,7 +63,7 @@ void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[]
 int main(int argc, char *argv[]){
 
     printf("setting up graph\n");
-    printf("Mem unit sz in bytes = %i", info->mem_unit);
+    //printf("Mem unit sz in bytes = %i", info->mem_unit);
 
 
     /// Opens the kmer_lst file
@@ -64,10 +71,15 @@ int main(int argc, char *argv[]){
     fd1 = fopen("kmer_lst.txt", "r");
     char kmer_list[MAX_DICT_SIZE][MAX_KMER_LEN]; // Assuming a maximum dictionary size and kmer length
 
-    fgets(kmer_list, BUFSIZ, fd1);
-    // printf("%s",kmer_list);
-    fclose(fd1);
-    printf("%c\n", kmer_list);
+    for(int g=0; g < MAX_DICT_SIZE; g++)
+    {
+        for(int u=0; u < MAX_KMER_LEN; u++)
+        {
+            fgets(&kmer_list[g][u], BUFSIZ, fd1);
+            // printf("%s",kmer_list);
+            fclose(fd1);
+        }
+    }
 
     // Opens the kmer-1 file
     FILE *fd2;
@@ -90,16 +102,6 @@ int main(int argc, char *argv[]){
 
 
 
-    //printf("%s\n", kmer_1); 
-    // Converst the kmer_list into token of strings
-    char * token_strings;
-    token_strings = strtok(kmer_list,", \n");
-    char * tok_str;
-    tok_str = strtok(kmer_1,", \n");
-    //printf("%s\n", tok_str);
-
-
-
     // LOOKS AT THE PREFIXES THAT CAN OCCURE
     for (int i = 0; i <= numKmers; i++)
     {
@@ -110,8 +112,7 @@ int main(int argc, char *argv[]){
         printf("%c\n", alpha[i]);
         strcat(temp_lmer, &alpha[i]);
         printf("%s\n",temp_lmer);
-        printf("stats: \t Availabel mem sz = %llu, \n total swap sz = %llu, \n Available high mem sz = %llu", info->freeram, info->totalswap, info->freehigh);
-        break;
+
         //strcat(temp_lmer, kmer_1);
         //printf("%s\n", temp_lmer);
 
@@ -125,7 +126,7 @@ int main(int argc, char *argv[]){
             // Create nodes in the graph
             int counts[2] = {0};
             int term = 0;
-            createNodes(&graph, lmer1, "Suffix", alpha[a], counts, term);
+            createNodes(0, lmer1, "Suffix", alpha[a], counts, term);
         }
 
         if (counter_for_find > 0)
