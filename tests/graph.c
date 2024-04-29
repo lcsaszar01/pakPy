@@ -40,26 +40,6 @@ void data_append(int tm[], int lps[]);
 
 void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[], int term);
 
-void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[], int term)
-{
-    if (graph->numNodes < MAX_DICT_SIZE)
-    {
-        KmerNode newNode;
-        strcpy(newNode.kmer, kmer);
-        strcpy(newNode.type, type);
-        newNode.letter = letter;
-        newNode.counts[0] = counts[0];
-        newNode.counts[1] = counts[1];
-        newNode.term = term;
-
-        graph->nodes[graph->numNodes++] = newNode;
-    }
-    else
-    {
-        printf("Maximum number of nodes reached.\n");
-    }
-}
-
 int main(int argc, char *argv[]){
 
     printf("setting up graph\n");
@@ -81,13 +61,6 @@ int main(int argc, char *argv[]){
         }
     }
 
-    // Opens the kmer-1 file
-    FILE *fd2;
-    fd2 = fopen("kmer_1.txt", "r");
-    char kmer_1[BUFSIZ];
-    fgets(kmer_1, BUFSIZ, fd2);
-    fclose(fd2);
-
     printf("Done importing kmer files.\n");
     
     double lst[BUFSIZ][2];
@@ -105,19 +78,19 @@ int main(int argc, char *argv[]){
     // LOOKS AT THE PREFIXES THAT CAN OCCURE
     for (int i = 0; i <= numKmers; i++)
     {
-        
         count++;
         char lmer1[MAX_KMER_LEN] = "";
         char lmer2[MAX_KMER_LEN] = "";
-        printf("%c\n", alpha[i]);
-        strcat(temp_lmer, &alpha[i]);
-        printf("%s\n",temp_lmer);
 
-        //strcat(temp_lmer, kmer_1);
-        //printf("%s\n", temp_lmer);
+        for (int a = 0; a < ALPHA_SIZE; a++){
+            for (int o = 0; o <= MAX_DICT_SIZE; o++){
+                for (int e = 0; e <= MAX_KMER_LEN; e++){
+                    printf("%c\n", alpha[a]);
+                    strcat(&kmer_list[o][e], &alpha[a]);
+                    printf("%s\n", temp_lmer);
+                }
+            }
 
-        for (int a = 0; a < ALPHA_SIZE; a++)
-        {
             char temp_lmer[MAX_KMER_LEN];
             printf(temp_lmer, "%s");
 
@@ -180,4 +153,22 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
+void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[], int term)
+{
+    if (graph->numNodes < MAX_DICT_SIZE)
+    {
+        KmerNode newNode;
+        strcpy(newNode.kmer, kmer);
+        strcpy(newNode.type, type);
+        newNode.letter = letter;
+        newNode.counts[0] = counts[0];
+        newNode.counts[1] = counts[1];
+        newNode.term = term;
 
+        graph->nodes[graph->numNodes++] = newNode;
+    }
+    else
+    {
+        printf("Maximum number of nodes reached.\n");
+    }
+}

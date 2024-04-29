@@ -1,550 +1,390 @@
-	.file	"graph.c"
-	.option pic
-	.attribute arch, "rv64i2p1_m2p0_a2p1_f2p2_d2p2_c2p0_zicsr2p0_zifencei2p0"
-	.attribute unaligned_access, 0
-	.attribute stack_align, 16
-	.text
-	.section	.rodata
-	.align	3
-.LC0:
-	.string	"Maximum number of nodes reached."
-	.text
-	.align	1
-	.globl	createNodes
-	.type	createNodes, @function
-createNodes:
-.LFB6:
+	.section	__TEXT,__text,regular,pure_instructions
+	.build_version macos, 14, 0	sdk_version 14, 4
+	.globl	_createNodes                    ; -- Begin function createNodes
+	.p2align	2
+_createNodes:                           ; @createNodes
 	.cfi_startproc
-	addi	sp,sp,-208
+; %bb.0:
+	sub	sp, sp, #208
 	.cfi_def_cfa_offset 208
-	sd	ra,200(sp)
-	sd	s0,192(sp)
-	.cfi_offset 1, -8
-	.cfi_offset 8, -16
-	addi	s0,sp,208
-	.cfi_def_cfa 8, 0
-	sd	a0,-168(s0)
-	sd	a1,-176(s0)
-	sd	a2,-184(s0)
-	sd	a4,-200(s0)
-	mv	a4,a5
-	mv	a5,a3
-	sb	a5,-185(s0)
-	mv	a5,a4
-	sw	a5,-192(s0)
-	la	a5,__stack_chk_guard
-	ld	a4, 0(a5)
-	sd	a4, -24(s0)
-	li	a4, 0
-	ld	a4,-168(s0)
-	li	a5,122880
-	add	a5,a4,a5
-	lw	a5,1120(a5)
-	mv	a4,a5
-	li	a5,999
-	bgt	a4,a5,.L2
-	addi	a5,s0,-152
-	ld	a1,-176(s0)
-	mv	a0,a5
-	call	strcpy@plt
-	addi	a5,s0,-152
-	addi	a5,a5,100
-	ld	a1,-184(s0)
-	mv	a0,a5
-	call	strcpy@plt
-	lbu	a5,-185(s0)
-	sb	a5,-42(s0)
-	ld	a5,-200(s0)
-	lw	a5,0(a5)
-	sw	a5,-40(s0)
-	ld	a5,-200(s0)
-	lw	a5,4(a5)
-	sw	a5,-36(s0)
-	lw	a5,-192(s0)
-	sw	a5,-32(s0)
-	ld	a4,-168(s0)
-	li	a5,122880
-	add	a5,a4,a5
-	lw	a4,1120(a5)
-	addiw	a5,a4,1
-	sext.w	a3,a5
-	ld	a2,-168(s0)
-	li	a5,122880
-	add	a5,a2,a5
-	sw	a3,1120(a5)
-	ld	a3,-168(s0)
-	mv	a5,a4
-	slli	a5,a5,5
-	sub	a5,a5,a4
-	slli	a5,a5,2
-	add	a5,a3,a5
-	mv	a3,a5
-	addi	a5,s0,-152
-	li	a4,124
-	mv	a2,a4
-	mv	a1,a5
-	mv	a0,a3
-	call	memcpy@plt
-	j	.L5
-.L2:
-	lla	a0,.LC0
-	call	puts@plt
-.L5:
-	nop
-	la	a5,__stack_chk_guard
-	ld	a4, -24(s0)
-	ld	a5, 0(a5)
-	xor	a5, a4, a5
-	li	a4, 0
-	beq	a5,zero,.L4
-	call	__stack_chk_fail@plt
-.L4:
-	ld	ra,200(sp)
-	.cfi_restore 1
-	ld	s0,192(sp)
-	.cfi_restore 8
-	.cfi_def_cfa 2, 208
-	addi	sp,sp,208
-	.cfi_def_cfa_offset 0
-	jr	ra
+	stp	x29, x30, [sp, #192]            ; 16-byte Folded Spill
+	add	x29, sp, #192
+	.cfi_def_cfa w29, 16
+	.cfi_offset w30, -8
+	.cfi_offset w29, -16
+	adrp	x8, ___stack_chk_guard@GOTPAGE
+	ldr	x8, [x8, ___stack_chk_guard@GOTPAGEOFF]
+	ldr	x8, [x8]
+	stur	x8, [x29, #-8]
+	str	x0, [sp, #48]
+	str	x1, [sp, #40]
+	str	x2, [sp, #32]
+	strb	w3, [sp, #31]
+	str	x4, [sp, #16]
+	str	w5, [sp, #12]
+	ldr	x8, [sp, #48]
+	mov	x9, #58464
+	movk	x9, #1, lsl #16
+	ldr	w8, [x8, x9]
+	subs	w8, w8, #1000
+	cset	w8, ge
+	tbnz	w8, #0, LBB0_2
+	b	LBB0_1
+LBB0_1:
+	ldr	x1, [sp, #40]
+	add	x0, sp, #60
+	str	x0, [sp]                        ; 8-byte Folded Spill
+	mov	x2, #100
+	bl	___strcpy_chk
+	ldr	x8, [sp]                        ; 8-byte Folded Reload
+	add	x0, x8, #100
+	ldr	x1, [sp, #32]
+	mov	x2, #10
+	bl	___strcpy_chk
+	ldr	x1, [sp]                        ; 8-byte Folded Reload
+	ldrb	w8, [sp, #31]
+	strb	w8, [sp, #170]
+	ldr	x8, [sp, #16]
+	ldr	w8, [x8]
+	str	w8, [sp, #172]
+	ldr	x8, [sp, #16]
+	ldr	w8, [x8, #4]
+	str	w8, [sp, #176]
+	ldr	w8, [sp, #12]
+	str	w8, [sp, #180]
+	ldr	x8, [sp, #48]
+	ldr	x9, [sp, #48]
+	mov	x10, #58464
+	movk	x10, #1, lsl #16
+	add	x11, x9, x10
+	ldrsw	x9, [x11]
+	mov	x10, x9
+	add	w10, w10, #1
+	str	w10, [x11]
+	mov	x10, #124
+	mul	x9, x9, x10
+	add	x0, x8, x9
+	mov	x2, #124
+	bl	_memcpy
+	b	LBB0_3
+LBB0_2:
+	adrp	x0, l_.str@PAGE
+	add	x0, x0, l_.str@PAGEOFF
+	bl	_printf
+	b	LBB0_3
+LBB0_3:
+	ldur	x9, [x29, #-8]
+	adrp	x8, ___stack_chk_guard@GOTPAGE
+	ldr	x8, [x8, ___stack_chk_guard@GOTPAGEOFF]
+	ldr	x8, [x8]
+	subs	x8, x8, x9
+	cset	w8, eq
+	tbnz	w8, #0, LBB0_5
+	b	LBB0_4
+LBB0_4:
+	bl	___stack_chk_fail
+LBB0_5:
+	ldp	x29, x30, [sp, #192]            ; 16-byte Folded Reload
+	add	sp, sp, #208
+	ret
 	.cfi_endproc
-.LFE6:
-	.size	createNodes, .-createNodes
-	.section	.rodata
-	.align	3
-.LC1:
-	.string	"setting up graph"
-	.align	3
-.LC2:
-	.string	"r"
-	.align	3
-.LC3:
-	.string	"kmer_lst.txt"
-	.align	3
-.LC4:
-	.string	"kmer_1.txt"
-	.align	3
-.LC5:
-	.string	"Done importing kmer files."
-	.align	3
-.LC6:
-	.string	"%c\n"
-	.align	3
-.LC7:
-	.string	"%s"
-	.align	3
-.LC8:
-	.string	"Suffix"
-	.text
-	.align	1
-	.globl	main
-	.type	main, @function
-main:
-.LFB7:
+                                        ; -- End function
+	.section	__TEXT,__literal8,8byte_literals
+	.p2align	3, 0x0                          ; -- Begin function main
+lCPI1_0:
+	.quad	0x3f2c2e33eff19503              ; double 2.1499999999999999E-4
+	.section	__TEXT,__text,regular,pure_instructions
+	.globl	_main
+	.p2align	2
+_main:                                  ; @main
 	.cfi_startproc
-	addi	sp,sp,-32
+; %bb.0:
+	stp	x28, x27, [sp, #-32]!           ; 16-byte Folded Spill
 	.cfi_def_cfa_offset 32
-	sd	ra,24(sp)
-	sd	s0,16(sp)
-	sd	s1,8(sp)
-	.cfi_offset 1, -8
-	.cfi_offset 8, -16
-	.cfi_offset 9, -24
-	addi	s0,sp,32
-	.cfi_def_cfa 8, 0
-	li	t0,-249856
-	addi	t0,t0,1984
-	add	sp,sp,t0
-	mv	a4,a0
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	sd	a1,1984(a5)
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	sw	a4,1996(a5)
-	la	a5,__stack_chk_guard
-	ld	a4, 0(a5)
-	sd	a4, -40(s0)
-	li	a4, 0
-	lla	a0,.LC1
-	call	puts@plt
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	s1,a5,s0
-	lla	a1,.LC2
-	lla	a0,.LC3
-	call	fopen@plt
-	mv	a5,a0
-	sd	a5,2040(s1)
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	sw	zero,2004(a5)
-	j	.L7
-.L10:
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	sw	zero,2008(a5)
-	j	.L8
-.L9:
-	li	a5,-245760
-	addi	a5,a5,-2024
-	addi	a5,a5,-32
-	add	a4,a5,s0
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a3,2008(a5)
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a2,2004(a5)
-	li	a5,100
-	mul	a5,a2,a5
-	add	a5,a3,a5
-	add	a4,a4,a5
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	ld	a2,2040(a5)
-	li	a1,8192
-	mv	a0,a4
-	call	fgets@plt
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	ld	a0,2040(a5)
-	call	fclose@plt
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	li	a4,-249856
-	addi	a4,a4,-32
-	add	a4,a4,s0
-	lw	a4,2008(a4)
-	addiw	a4,a4,1
-	sw	a4,2008(a5)
-.L8:
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a5,2008(a5)
-	sext.w	a4,a5
-	li	a5,99
-	ble	a4,a5,.L9
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	li	a4,-249856
-	addi	a4,a4,-32
-	add	a4,a4,s0
-	lw	a4,2004(a4)
-	addiw	a4,a4,1
-	sw	a4,2004(a5)
-.L7:
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a5,2004(a5)
-	sext.w	a4,a5
-	li	a5,999
-	ble	a4,a5,.L10
-	li	a5,-245760
-	addi	a5,a5,-32
-	add	s1,a5,s0
-	lla	a1,.LC2
-	lla	a0,.LC4
-	call	fopen@plt
-	mv	a5,a0
-	sd	a5,-2048(s1)
-	li	a5,-245760
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	li	a4,-16384
-	addi	a4,a4,-8
-	addi	a4,a4,-32
-	add	a4,a4,s0
-	ld	a2,-2048(a5)
-	li	a1,8192
-	mv	a0,a4
-	call	fgets@plt
-	li	a5,-245760
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	ld	a0,-2048(a5)
-	call	fclose@plt
-	lla	a0,.LC5
-	call	puts@plt
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	sw	zero,2024(a5)
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	sw	zero,2028(a5)
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	sw	zero,2032(a5)
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	sw	zero,2012(a5)
-	li	a5,-16384
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	li	a4,1195593728
-	addi	a4,a4,1089
-	sw	a4,-328(a5)
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	sw	zero,2016(a5)
-	j	.L11
-.L15:
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	li	a4,-249856
-	addi	a4,a4,-32
-	add	a4,a4,s0
-	lw	a4,2012(a4)
-	addiw	a4,a4,1
-	sw	a4,2012(a5)
-	li	a5,-16384
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	sd	zero,-320(a5)
-	sd	zero,-312(a5)
-	sd	zero,-304(a5)
-	sd	zero,-296(a5)
-	sd	zero,-288(a5)
-	sd	zero,-280(a5)
-	sd	zero,-272(a5)
-	sd	zero,-264(a5)
-	sd	zero,-256(a5)
-	sd	zero,-248(a5)
-	sd	zero,-240(a5)
-	sd	zero,-232(a5)
-	sw	zero,-224(a5)
-	li	a5,-16384
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	sd	zero,-216(a5)
-	sd	zero,-208(a5)
-	sd	zero,-200(a5)
-	sd	zero,-192(a5)
-	sd	zero,-184(a5)
-	sd	zero,-176(a5)
-	sd	zero,-168(a5)
-	sd	zero,-160(a5)
-	sd	zero,-152(a5)
-	sd	zero,-144(a5)
-	sd	zero,-136(a5)
-	sd	zero,-128(a5)
-	sw	zero,-120(a5)
-	li	a5,-16384
-	addi	a5,a5,-32
-	add	a4,a5,s0
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a5,2016(a5)
-	add	a5,a4,a5
-	lbu	a5,-328(a5)
-	sext.w	a5,a5
-	mv	a1,a5
-	lla	a0,.LC6
-	call	printf@plt
-	li	a5,-16384
-	addi	a5,a5,-328
-	addi	a5,a5,-32
-	add	a4,a5,s0
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a5,2016(a5)
-	add	a4,a4,a5
-	li	a5,-8192
-	addi	a5,a5,-8
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	mv	a1,a4
-	mv	a0,a5
-	call	strcat@plt
-	li	a5,-8192
-	addi	a5,a5,-8
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	mv	a0,a5
-	call	puts@plt
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	sw	zero,2020(a5)
-	j	.L12
-.L13:
-	li	a5,-16384
-	addi	a5,a5,-112
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lla	a1,.LC7
-	mv	a0,a5
-	call	printf@plt
-	li	a5,-245760
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	sd	zero,-2032(a5)
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	sw	zero,2036(a5)
-	li	a5,-16384
-	addi	a5,a5,-32
-	add	a4,a5,s0
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a5,2020(a5)
-	add	a5,a4,a5
-	lbu	a3,-328(a5)
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a2,2036(a5)
-	li	a5,-245760
-	addi	a5,a5,-2032
-	addi	a5,a5,-32
-	add	a4,a5,s0
-	li	a5,-16384
-	addi	a5,a5,-320
-	addi	a5,a5,-32
-	add	a1,a5,s0
-	mv	a5,a2
-	lla	a2,.LC8
-	li	a0,0
-	call	createNodes
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	li	a4,-249856
-	addi	a4,a4,-32
-	add	a4,a4,s0
-	lw	a4,2020(a4)
-	addiw	a4,a4,1
-	sw	a4,2020(a5)
-.L12:
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a5,2020(a5)
-	sext.w	a4,a5
-	li	a5,3
-	ble	a4,a5,.L13
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a5,2028(a5)
-	sext.w	a5,a5
-	ble	a5,zero,.L14
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a5,2028(a5)
-	fcvt.d.w	fa4,a5
-	li	a5,-245760
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lla	a4,.LC9
-	fld	fa5,0(a4)
-	fdiv.d	fa5,fa4,fa5
-	fsd	fa5,-2040(a5)
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a5,2028(a5)
-	fcvt.d.w	fa5,a5
-	li	a5,-147456
-	addi	a5,a5,-32
-	add	a4,a5,s0
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a5,2012(a5)
-	slli	a5,a5,4
-	add	a5,a4,a5
-	fsd	fa5,-320(a5)
-	li	a5,-147456
-	addi	a5,a5,-32
-	add	a4,a5,s0
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a5,2012(a5)
-	slli	a5,a5,4
-	add	a5,a4,a5
-	li	a4,-245760
-	addi	a4,a4,-32
-	add	a4,a4,s0
-	fld	fa5,-2040(a4)
-	fsd	fa5,-328(a5)
-.L14:
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	li	a4,-249856
-	addi	a4,a4,-32
-	add	a4,a4,s0
-	lw	a4,2016(a4)
-	addiw	a4,a4,1
-	sw	a4,2016(a5)
-.L11:
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a4,a5,s0
-	li	a5,-249856
-	addi	a5,a5,-32
-	add	a5,a5,s0
-	lw	a4,2016(a4)
-	lw	a5,2024(a5)
-	sext.w	a4,a4
-	sext.w	a5,a5
-	ble	a4,a5,.L15
-	li	a5,0
-	mv	a4,a5
-	la	a5,__stack_chk_guard
-	ld	a3, -40(s0)
-	ld	a5, 0(a5)
-	xor	a5, a3, a5
-	li	a3, 0
-	beq	a5,zero,.L17
-	call	__stack_chk_fail@plt
-.L17:
-	mv	a0,a4
-	li	t0,249856
-	addi	t0,t0,-1984
-	add	sp,sp,t0
-	.cfi_def_cfa 2, 32
-	ld	ra,24(sp)
-	.cfi_restore 1
-	ld	s0,16(sp)
-	.cfi_restore 8
-	ld	s1,8(sp)
-	.cfi_restore 9
-	addi	sp,sp,32
-	.cfi_def_cfa_offset 0
-	jr	ra
+	stp	x29, x30, [sp, #16]             ; 16-byte Folded Spill
+	add	x29, sp, #16
+	.cfi_def_cfa w29, 16
+	.cfi_offset w30, -8
+	.cfi_offset w29, -16
+	.cfi_offset w27, -24
+	.cfi_offset w28, -32
+	mov	w9, #3808
+	movk	w9, #2, lsl #16
+	adrp	x16, ___chkstk_darwin@GOTPAGE
+	ldr	x16, [x16, ___chkstk_darwin@GOTPAGEOFF]
+	blr	x16
+	sub	sp, sp, #32, lsl #12            ; =131072
+	sub	sp, sp, #3808
+	adrp	x8, ___stack_chk_guard@GOTPAGE
+	ldr	x8, [x8, ___stack_chk_guard@GOTPAGEOFF]
+	ldr	x8, [x8]
+	stur	x8, [x29, #-24]
+	str	wzr, [sp, #124]
+	str	w0, [sp, #120]
+	str	x1, [sp, #112]
+	adrp	x0, l_.str.1@PAGE
+	add	x0, x0, l_.str.1@PAGEOFF
+	bl	_printf
+	adrp	x0, l_.str.2@PAGE
+	add	x0, x0, l_.str.2@PAGEOFF
+	adrp	x1, l_.str.3@PAGE
+	add	x1, x1, l_.str.3@PAGEOFF
+	bl	_fopen
+	str	x0, [sp, #104]
+	str	wzr, [sp, #100]
+	b	LBB1_1
+LBB1_1:                                 ; =>This Loop Header: Depth=1
+                                        ;     Child Loop BB1_3 Depth 2
+	ldr	w8, [sp, #100]
+	subs	w8, w8, #1000
+	cset	w8, ge
+	tbnz	w8, #0, LBB1_8
+	b	LBB1_2
+LBB1_2:                                 ;   in Loop: Header=BB1_1 Depth=1
+	str	wzr, [sp, #96]
+	b	LBB1_3
+LBB1_3:                                 ;   Parent Loop BB1_1 Depth=1
+                                        ; =>  This Inner Loop Header: Depth=2
+	ldr	w8, [sp, #96]
+	subs	w8, w8, #100
+	cset	w8, ge
+	tbnz	w8, #0, LBB1_6
+	b	LBB1_4
+LBB1_4:                                 ;   in Loop: Header=BB1_3 Depth=2
+	ldrsw	x8, [sp, #100]
+	mov	x9, #100
+	mul	x9, x8, x9
+	add	x8, sp, #8, lsl #12             ; =32768
+	add	x8, x8, #2104
+	add	x8, x8, x9
+	ldrsw	x9, [sp, #96]
+	add	x0, x8, x9
+	ldr	x2, [sp, #104]
+	mov	w1, #1024
+	bl	_fgets
+	ldr	x0, [sp, #104]
+	bl	_fclose
+	b	LBB1_5
+LBB1_5:                                 ;   in Loop: Header=BB1_3 Depth=2
+	ldr	w8, [sp, #96]
+	add	w8, w8, #1
+	str	w8, [sp, #96]
+	b	LBB1_3
+LBB1_6:                                 ;   in Loop: Header=BB1_1 Depth=1
+	b	LBB1_7
+LBB1_7:                                 ;   in Loop: Header=BB1_1 Depth=1
+	ldr	w8, [sp, #100]
+	add	w8, w8, #1
+	str	w8, [sp, #100]
+	b	LBB1_1
+LBB1_8:
+	adrp	x0, l_.str.4@PAGE
+	add	x0, x0, l_.str.4@PAGEOFF
+	adrp	x1, l_.str.3@PAGE
+	add	x1, x1, l_.str.3@PAGEOFF
+	bl	_fopen
+	str	x0, [sp, #88]
+	ldr	x2, [sp, #88]
+	add	x0, sp, #8, lsl #12             ; =32768
+	add	x0, x0, #1080
+	mov	w1, #1024
+	bl	_fgets
+	ldr	x0, [sp, #88]
+	bl	_fclose
+	adrp	x0, l_.str.5@PAGE
+	add	x0, x0, l_.str.5@PAGEOFF
+	bl	_printf
+	str	wzr, [sp, #84]
+	str	wzr, [sp, #80]
+	str	wzr, [sp, #76]
+	str	wzr, [sp, #72]
+	adrp	x8, l___const.main.alpha@PAGE
+	add	x8, x8, l___const.main.alpha@PAGEOFF
+	ldr	w8, [x8]
+	str	w8, [sp, #68]
+	str	wzr, [sp, #64]
+	b	LBB1_9
+LBB1_9:                                 ; =>This Loop Header: Depth=1
+                                        ;     Child Loop BB1_11 Depth 2
+	ldr	w8, [sp, #64]
+	ldr	w9, [sp, #84]
+	subs	w8, w8, w9
+	cset	w8, gt
+	tbnz	w8, #0, LBB1_18
+	b	LBB1_10
+LBB1_10:                                ;   in Loop: Header=BB1_9 Depth=1
+	ldr	w8, [sp, #72]
+	add	w8, w8, #1
+	str	w8, [sp, #72]
+	add	x0, sp, #3, lsl #12             ; =12288
+	add	x0, x0, #4052
+	mov	w1, #0
+	str	w1, [sp, #20]                   ; 4-byte Folded Spill
+	mov	x2, #100
+	str	x2, [sp, #24]                   ; 8-byte Folded Spill
+	bl	_memset
+	ldr	w1, [sp, #20]                   ; 4-byte Folded Reload
+	ldr	x2, [sp, #24]                   ; 8-byte Folded Reload
+	add	x0, sp, #3, lsl #12             ; =12288
+	add	x0, x0, #3952
+	bl	_memset
+	ldrsw	x9, [sp, #64]
+	add	x8, sp, #68
+	str	x8, [sp, #32]                   ; 8-byte Folded Spill
+	ldrsb	w10, [x8, x9]
+	mov	x9, sp
+                                        ; implicit-def: $x8
+	mov	x8, x10
+	str	x8, [x9]
+	adrp	x0, l_.str.6@PAGE
+	add	x0, x0, l_.str.6@PAGEOFF
+	bl	_printf
+	ldr	x8, [sp, #32]                   ; 8-byte Folded Reload
+	ldrsw	x9, [sp, #64]
+	add	x1, x8, x9
+	add	x0, sp, #4, lsl #12             ; =16384
+	add	x0, x0, #56
+	str	x0, [sp, #40]                   ; 8-byte Folded Spill
+	mov	x2, #1024
+	bl	___strcat_chk
+	ldr	x8, [sp, #40]                   ; 8-byte Folded Reload
+	mov	x9, sp
+	str	x8, [x9]
+	adrp	x0, l_.str.7@PAGE
+	add	x0, x0, l_.str.7@PAGEOFF
+	bl	_printf
+	str	wzr, [sp, #60]
+	b	LBB1_11
+LBB1_11:                                ;   Parent Loop BB1_9 Depth=1
+                                        ; =>  This Inner Loop Header: Depth=2
+	ldr	w8, [sp, #60]
+	subs	w8, w8, #4
+	cset	w8, ge
+	tbnz	w8, #0, LBB1_14
+	b	LBB1_12
+LBB1_12:                                ;   in Loop: Header=BB1_11 Depth=2
+	mov	x9, sp
+	adrp	x8, l_.str.8@PAGE
+	add	x8, x8, l_.str.8@PAGEOFF
+	str	x8, [x9]
+	add	x0, sp, #3, lsl #12             ; =12288
+	add	x0, x0, #3852
+	bl	_printf
+	add	x4, sp, #3, lsl #12             ; =12288
+	add	x4, x4, #3840
+	str	xzr, [sp, #16128]
+	str	wzr, [sp, #56]
+	ldrsw	x9, [sp, #60]
+	add	x8, sp, #68
+	ldrsb	w3, [x8, x9]
+	ldr	w5, [sp, #56]
+	mov	x0, #0
+	add	x1, sp, #3, lsl #12             ; =12288
+	add	x1, x1, #4052
+	adrp	x2, l_.str.9@PAGE
+	add	x2, x2, l_.str.9@PAGEOFF
+	bl	_createNodes
+	b	LBB1_13
+LBB1_13:                                ;   in Loop: Header=BB1_11 Depth=2
+	ldr	w8, [sp, #60]
+	add	w8, w8, #1
+	str	w8, [sp, #60]
+	b	LBB1_11
+LBB1_14:                                ;   in Loop: Header=BB1_9 Depth=1
+	ldr	w8, [sp, #80]
+	subs	w8, w8, #0
+	cset	w8, le
+	tbnz	w8, #0, LBB1_16
+	b	LBB1_15
+LBB1_15:                                ;   in Loop: Header=BB1_9 Depth=1
+	ldr	s1, [sp, #80]
+                                        ; implicit-def: $d0
+	fmov	s0, s1
+	sshll.2d	v0, v0, #0
+                                        ; kill: def $d0 killed $d0 killed $q0
+	scvtf	d0, d0
+	adrp	x8, lCPI1_0@PAGE
+	ldr	d1, [x8, lCPI1_0@PAGEOFF]
+	fdiv	d0, d0, d1
+	str	d0, [sp, #48]
+	ldr	s1, [sp, #80]
+                                        ; implicit-def: $d0
+	fmov	s0, s1
+	sshll.2d	v0, v0, #0
+                                        ; kill: def $d0 killed $d0 killed $q0
+	scvtf	d0, d0
+	ldrsw	x10, [sp, #72]
+	add	x8, sp, #4, lsl #12             ; =16384
+	add	x8, x8, #1080
+	mov	x9, x8
+	add	x9, x9, x10, lsl #4
+	str	d0, [x9, #8]
+	ldr	d0, [sp, #48]
+	ldrsw	x9, [sp, #72]
+	lsl	x9, x9, #4
+	str	d0, [x8, x9]
+	b	LBB1_16
+LBB1_16:                                ;   in Loop: Header=BB1_9 Depth=1
+	b	LBB1_17
+LBB1_17:                                ;   in Loop: Header=BB1_9 Depth=1
+	ldr	w8, [sp, #64]
+	add	w8, w8, #1
+	str	w8, [sp, #64]
+	b	LBB1_9
+LBB1_18:
+	ldur	x9, [x29, #-24]
+	adrp	x8, ___stack_chk_guard@GOTPAGE
+	ldr	x8, [x8, ___stack_chk_guard@GOTPAGEOFF]
+	ldr	x8, [x8]
+	subs	x8, x8, x9
+	cset	w8, eq
+	tbnz	w8, #0, LBB1_20
+	b	LBB1_19
+LBB1_19:
+	bl	___stack_chk_fail
+LBB1_20:
+	mov	w0, #0
+	add	sp, sp, #32, lsl #12            ; =131072
+	add	sp, sp, #3808
+	ldp	x29, x30, [sp, #16]             ; 16-byte Folded Reload
+	ldp	x28, x27, [sp], #32             ; 16-byte Folded Reload
+	ret
 	.cfi_endproc
-.LFE7:
-	.size	main, .-main
-	.section	.rodata
-	.align	3
-.LC9:
-	.word	-269380349
-	.word	1059860019
-	.ident	"GCC: (Ubuntu 13.2.0-4ubuntu3) 13.2.0"
-	.section	.note.GNU-stack,"",@progbits
+                                        ; -- End function
+	.section	__TEXT,__cstring,cstring_literals
+l_.str:                                 ; @.str
+	.asciz	"Maximum number of nodes reached.\n"
+
+l_.str.1:                               ; @.str.1
+	.asciz	"setting up graph\n"
+
+l_.str.2:                               ; @.str.2
+	.asciz	"kmer_lst.txt"
+
+l_.str.3:                               ; @.str.3
+	.asciz	"r"
+
+l_.str.4:                               ; @.str.4
+	.asciz	"kmer_1.txt"
+
+l_.str.5:                               ; @.str.5
+	.asciz	"Done importing kmer files.\n"
+
+	.section	__TEXT,__literal4,4byte_literals
+l___const.main.alpha:                   ; @__const.main.alpha
+	.ascii	"ATCG"
+
+	.section	__TEXT,__cstring,cstring_literals
+l_.str.6:                               ; @.str.6
+	.asciz	"%c\n"
+
+l_.str.7:                               ; @.str.7
+	.asciz	"%s\n"
+
+l_.str.8:                               ; @.str.8
+	.asciz	"%s"
+
+l_.str.9:                               ; @.str.9
+	.asciz	"Suffix"
+
+.subsections_via_symbols
