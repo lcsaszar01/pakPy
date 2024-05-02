@@ -56,7 +56,7 @@ int main(int argc, char *argv[]){
         for(int u=0; u < MAX_KMER_LEN; u++)
         {
             fgets(&kmer_list[g][u], BUFSIZ, fd1);
-            // printf("%s",kmer_list);
+            sprintf("%s%s",&kmer_list[g][u]);
             fclose(fd1);
         }
     }
@@ -68,9 +68,9 @@ int main(int argc, char *argv[]){
     int numKmers = 0; // Number of kmers in the list
 
     int counter_for_find = 0;
-    int counter_for_find2 = 0;
+    //int counter_for_find2 = 0;
     int count = 0;
-    char temp_lmer[BUFSIZ];
+    char temp_lmer[MAX_DICT_SIZE];
     char alpha[ALPHA_SIZE] = {'A', 'T', 'C', 'G'};
 
 
@@ -80,19 +80,17 @@ int main(int argc, char *argv[]){
     {
         count++;
         char lmer1[MAX_KMER_LEN] = "";
-        char lmer2[MAX_KMER_LEN] = "";
+        //char lmer2[MAX_KMER_LEN] = "";
 
         for (int a = 0; a < ALPHA_SIZE; a++){
-            for (int o = 0; o <= MAX_DICT_SIZE; o++){
-                for (int e = 0; e <= MAX_KMER_LEN; e++){
+            for (int o = 0; o <= MAX_DICT_SIZE-1; o++){
+                for (int e = 0; e <= MAX_KMER_LEN-1; e++){
                     printf("%c\n", alpha[a]);
                     strcat(&kmer_list[o][e], &alpha[a]);
-                    printf("%s\n", temp_lmer);
+                    sprintf("%s\n", temp_lmer);
                 }
             }
 
-            char temp_lmer[MAX_KMER_LEN];
-            printf(temp_lmer, "%s");
 
             // Check if temp_lmer exists in kmer_list
 
@@ -144,9 +142,9 @@ int main(int argc, char *argv[]){
     */
 
     // Perform stats and data operations
-    int tm[MAX_DICT_SIZE],
-    lps[MAX_DICT_SIZE];
-    char *lname[MAX_DICT_SIZE];
+    //int tm[MAX_DICT_SIZE],
+    //lps[MAX_DICT_SIZE];
+    //char *lname[MAX_DICT_SIZE];
     //loop_stat(numKmers, "graph values break down");
     //data_append(tm, lps);
 

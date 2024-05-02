@@ -26,10 +26,6 @@ typedef struct {
 
 // Function prototypes
 void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[], int term);
-void loop_stat(int counts, char *message);
-void data_chart(int tm[], int l[], char *lname[], double ratio[], char *label);
-void data_append(int tm[], int lps[]);
-
 int main() {
     char kmer_list[MAX_DICT_SIZE][MAX_KMER_LEN]; // Assuming a maximum dictionary size and kmer length
     int numKmers = 0; // Number of kmers in the list
@@ -86,10 +82,9 @@ int main() {
     }
 
     // Perform stats and data operations
-    int tm[MAX_DICT_SIZE], lps[MAX_DICT_SIZE];
-    char *lname[MAX_DICT_SIZE];
-    loop_stat(numKmers, "graph values break down");
-    data_append(tm, lps);
+
+    //loop_stat(numKmers, "graph values break down");
+   
 
     return 0;
 }
