@@ -5,7 +5,8 @@
 #include <string.h>
 #include <math.h>
 #include <float.h>
-//#include <sys/
+#include <cpucycles.h>
+
 
 //int sysinfo(struct sysinfo *info);
 
@@ -15,9 +16,10 @@
 #define MAX_KMER_LEN 100
 #define MAX_DICT_SIZE 1000
 #define COVERAGE 0.000215
+#define NUM_FILES 500
 
-// Define structure for kmer nodes
-typedef struct {
+                 // Define structure for kmer nodes
+                 typedef struct {
     char kmer[MAX_KMER_LEN];
     char type[10];
     char letter;
@@ -34,6 +36,10 @@ typedef struct
 
 // Function prototypes
 void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[], int term);
+long long count = cpucycles();
+long long persecond = cpucycles_persecond();
+const char *implementation = cpucycles_implementation();
+const char *version = cpucycles_version();
 //void loop_stat(int counts, char *message);
 //void data_chart(int tm[], int l[], char *lname[], double ratio[], char *label);
 //void data_append(int tm[], int lps[]);
@@ -45,11 +51,13 @@ int main(int argc, char *argv[]){
     printf("setting up graph\n");
     //printf("Mem unit sz in bytes = %i", info->mem_unit);
 
-	for(int h=0; h<499;h++){
+	for(int h=0; h<499; h++){
     /// Opens the kmer_lst file
 	//
 	char str[50];
 	char temper[4];
+    char fstring[32];
+    char * line;
 	memset(str, 0, 50);
 	strcat(str,"../kmers/dna_kmer_");
 	itoa(h, temper, 10);
@@ -60,17 +68,20 @@ int main(int argc, char *argv[]){
     fd1 = fopen(str, "r");
     char kmer_list[MAX_DICT_SIZE][MAX_KMER_LEN]; // Assuming a maximum dictionary size and kmer length
 
-    for(int g=0; g < MAX_DICT_SIZE; g++)
-    {
-        for(int u=0; u < MAX_KMER_LEN; u++)
-        {
-            fgets(&kmer_list[g][u], BUFSIZ, fd1);
-            sprintf("%s%s",kmer_list[g][u]);
-            fclose(fd1);
+    for(int k=0; k<=NUM_FILES; k++){
+        for(int f=0; f<= sizeof(fd1); f++){
+            fgets(fstring, BUFSIZ, fd1);
+            line= strtok(fstring, ", ");
+            while(line != NULL){
+                line = strtok(fstring, ", ");
+                fgets(&kmer_list[f][f], BUFSIZ, line);
+                sprintf("%s%s", kmer_list[f][f]);
+            }
         }
     }
-	
-	}	
+
+    fclose(fd1);
+
     printf("Done importing kmer files.\n");
     
     double lst[BUFSIZ][2];
