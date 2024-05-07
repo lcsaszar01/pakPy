@@ -34,9 +34,9 @@ typedef struct
 
 // Function prototypes
 void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[], int term);
-void loop_stat(int counts, char *message);
-void data_chart(int tm[], int l[], char *lname[], double ratio[], char *label);
-void data_append(int tm[], int lps[]);
+//void loop_stat(int counts, char *message);
+//void data_chart(int tm[], int l[], char *lname[], double ratio[], char *label);
+//void data_append(int tm[], int lps[]);
 
 void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[], int term);
 
@@ -45,10 +45,19 @@ int main(int argc, char *argv[]){
     printf("setting up graph\n");
     //printf("Mem unit sz in bytes = %i", info->mem_unit);
 
-
+	for(int h=0; h<499;h++){
     /// Opens the kmer_lst file
+	//
+	char str[50];
+	char temper[4];
+	memset(str, 0, 50);
+	strcat(str,"../kmers/dna_kmer_");
+	itoa(h, temper, 10);
+	strcat(str,temper);
+	strcat(str,".txt");
+
     FILE *fd1;
-    fd1 = fopen("kmer_lst.txt", "r");
+    fd1 = fopen(str, "r");
     char kmer_list[MAX_DICT_SIZE][MAX_KMER_LEN]; // Assuming a maximum dictionary size and kmer length
 
     for(int g=0; g < MAX_DICT_SIZE; g++)
@@ -56,11 +65,12 @@ int main(int argc, char *argv[]){
         for(int u=0; u < MAX_KMER_LEN; u++)
         {
             fgets(&kmer_list[g][u], BUFSIZ, fd1);
-            sprintf("%s%s",&kmer_list[g][u]);
+            sprintf("%s%s",kmer_list[g][u]);
             fclose(fd1);
         }
     }
-
+	
+	}	
     printf("Done importing kmer files.\n");
     
     double lst[BUFSIZ][2];
