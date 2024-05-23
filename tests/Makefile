@@ -1,17 +1,18 @@
 # tool macros
 CC = gcc
 CXX = g++ # FILL: the compiler
-CFLAGS := -g -l -std-c++17 -funroll-all-loops # FILL: compile flags
-CXXFLAGS := -g # FILL: compile flags
-COBJFLAGS := $(CFLAGS) -c
-TARGETS = tests
+CFLAGS =# FILL: compile flags
+CXXFLAGS = -g # FILL: compile flags
+SOURCES = graph.c
+OBJECTS = graph.o
+TARGET = graph
 
-all: $(TARGETS)
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS)
 
 clean:
-	rm -f $(TARGERTS)
+	rm -f $(OBJECTS) $(TARGET)
 
-tests: graph.c
-	$(CC) $(CFLAGS) -o $@ $^
-
-.SUFFIXES:
+.PHONY: clean

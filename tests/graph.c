@@ -5,10 +5,10 @@
 #include <string.h>
 #include <math.h>
 #include <float.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <errno.h>
 //include <cpucycles.h>
-
-
-//int sysinfo(struct sysinfo *info);
 
 // Define constants
 #define ALPHA_SIZE 4
@@ -18,7 +18,7 @@
 #define COVERAGE 0.000215
 #define NUM_FILES 500
 
-                 // Define structure for kmer nodes
+// Define structure for kmer nodes
 typedef struct {
     char kmer[MAX_KMER_LEN];
     char type[10];
@@ -28,8 +28,7 @@ typedef struct {
 } KmerNode;
 
 // Define structure for graph nodes
-typedef struct
-{
+typedef struct{
     KmerNode nodes[MAX_DICT_SIZE];
     int numNodes;
 } Graph;
@@ -44,45 +43,46 @@ void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[]
 //void data_chart(int tm[], int l[], char *lname[], double ratio[], char *label);
 //void data_append(int tm[], int lps[]);
 
-void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[], int term);
+int main(){
+    printf("here");
+	for(int h = 0; h < 499; h++){
+    // Opens the kmer_lst file
 
-int main(int argc, char *argv[]){
-
-    printf("setting up graph\n");
-    //printf("Mem unit sz in bytes = %i", info->mem_unit);
-
-	for(int h=0; h<499; h++){
-    /// Opens the kmer_lst file
-	//
-		char str[50];
+		char string[50];
 		char temper[4];
     	char fstring[32];
     	char * line;
-		memset(str, 0, 50);
-		strcat(str,"../kmers/dna_kmer_");
-		itoa(h, temper, 10);
-		strcat(str,temper);
-		strcat(str,".txt");
+        const char *str = temper;
+
+        memset(string, 0, 50);
+        printf("HERE");
+		strcat(string,"../../kmers/dna_kmer_");
+        snprintf(temper, sizeof(temper), "%d", h);
+		strcat(string,str);
+		strcat(string,".txt");
+        printf("%s", string);
+        
 
     	FILE *fd1;
-    	fd1 = fopen(str, "r");
+    	fd1 = fopen(string, "r");
     	char kmer_list[MAX_DICT_SIZE][MAX_KMER_LEN]; // Assuming a maximum dictionary size and kmer length
 
-    	for(int k=0; k<=NUM_FILES; k++){
-        	for(int f=0; f<= sizeof(fd1); f++){
+    	for(int k = 0; k <= NUM_FILES; k++){
+        	for(int f = 0; f <= MAX_DICT_SIZE; f++){
             	fgets(fstring, BUFSIZ, fd1);
             	line= strtok(fstring, ", ");
             	while(line != NULL){
                 	line = strtok(fstring, ", ");
-                	fgets(&kmer_list[f][f], BUFSIZ, line);
+                	fgets(&kmer_list[f][f], BUFSIZ, fd1);
                 	//sprintf("%s%s", kmer_list[f][f]);
             	}
         	}
    		}
 
 
-    fclose(fd1);
+        fclose(fd1);
     }
+
     printf("Done importing kmer files.\n");
     
     double lst[BUFSIZ][2];
@@ -92,7 +92,7 @@ int main(int argc, char *argv[]){
     int counter_for_find = 0;
     //int counter_for_find2 = 0;
     int count = 0;
-    char temp_lmer[MAX_DICT_SIZE];
+    //char temp_lmer[MAX_DICT_SIZE];
     char alpha[ALPHA_SIZE] = {'A', 'T', 'C', 'G'};
 
 
@@ -192,3 +192,5 @@ void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[]
         printf("Maximum number of nodes reached.\n");
     }
 }
+
+
