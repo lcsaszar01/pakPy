@@ -28,16 +28,16 @@ Enter in the command line
 
 ### To compile code into ASM use GCC
 ```
-gcc -c file.S -o file.o
+gcc -c graph.S -o graph.o
 ```
 ```
-gcc file.o -o file
+gcc graph.o -o graph
 ```
 ```
-gcc -S file.c -o file.s
+gcc -S graph.c -o graph.s
 ```
 ```
-gcc -c file.s
+gcc -c graph.s
 ```
 
 ### Verified Platforms
