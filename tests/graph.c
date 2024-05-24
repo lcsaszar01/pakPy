@@ -1,37 +1,6 @@
-//graph.ci
+//graph.c
 //author @lcsaszar01
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <float.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <errno.h>
-//include <cpucycles.h>
-
-// Define constants
-#define ALPHA_SIZE 4
-#define K_SIZE 3
-#define MAX_KMER_LEN 100
-#define MAX_DICT_SIZE 1000
-#define COVERAGE 0.000215
-#define NUM_FILES 500
-
-// Define structure for kmer nodes
-typedef struct {
-    char kmer[MAX_KMER_LEN];
-    char type[10];
-    char letter;
-    int counts[2];
-    int term;
-} KmerNode;
-
-// Define structure for graph nodes
-typedef struct{
-    KmerNode nodes[MAX_DICT_SIZE];
-    int numNodes;
-} Graph;
+#include "graph.h"
 
 // Function prototypes
 void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[], int term);
@@ -43,9 +12,9 @@ void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[]
 //void data_chart(int tm[], int l[], char *lname[], double ratio[], char *label);
 //void data_append(int tm[], int lps[]);
 
-int main(){
+int main(void){
     printf("here");
-	for(int h = 0; h < 499; h++){
+	for(int h = 0; h <= 500; h++){
     // Opens the kmer_lst file
 
 		char string[50];
@@ -56,7 +25,7 @@ int main(){
 
         memset(string, 0, 50);
         printf("HERE");
-		strcat(string,"../../kmers/dna_kmer_");
+		strcat(string,"../kmers/dna_kmer_");
         snprintf(temper, sizeof(temper), "%d", h);
 		strcat(string,str);
 		strcat(string,".txt");
@@ -95,8 +64,6 @@ int main(){
     //char temp_lmer[MAX_DICT_SIZE];
     char alpha[ALPHA_SIZE] = {'A', 'T', 'C', 'G'};
 
-
-
     // LOOKS AT THE PREFIXES THAT CAN OCCURE
     for (int i = 0; i <= numKmers; i++)
     {
@@ -115,6 +82,7 @@ int main(){
 
 
             // Check if temp_lmer exists in kmer_list
+            
 
             // Create nodes in the graph
             int counts[2] = {0};
@@ -172,25 +140,3 @@ int main(){
 
     return 0;
 }
-
-void createNodes(Graph *graph, char *kmer, char *type, char letter, int counts[], int term)
-{
-    if (graph->numNodes < MAX_DICT_SIZE)
-    {
-        KmerNode newNode;
-        strcpy(newNode.kmer, kmer);
-        strcpy(newNode.type, type);
-        newNode.letter = letter;
-        newNode.counts[0] = counts[0];
-        newNode.counts[1] = counts[1];
-        newNode.term = term;
-
-        graph->nodes[graph->numNodes++] = newNode;
-    }
-    else
-    {
-        printf("Maximum number of nodes reached.\n");
-    }
-}
-
-

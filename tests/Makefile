@@ -1,18 +1,26 @@
 # tool macros
 CC = gcc
-CXX = g++ # FILL: the compiler
-CFLAGS =# FILL: compile flags
+
+#Flags 
+CFLAGS = -O2 -g -Wall -Wextra -Wconversion -Wshadow -pedantic -Werror# FILL: compile flags
+
 CXXFLAGS = -g # FILL: compile flags
+
 SOURCES = graph.c
-OBJECTS = graph.o
+OBJECTS = graph.o 
 TARGET = graph
 
-all: $(TARGET)
+#initialize directories
 
 $(TARGET): $(OBJECTS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS)
 
-clean:
-	rm -f $(OBJECTS) $(TARGET)
+#machine_code: 
 
-.PHONY: clean
+
+all: $(TARGET) 
+
+clean:
+	rm -rf $(TARGET) $(OBJECTS)
+
+
